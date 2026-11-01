@@ -9,9 +9,9 @@
   --bg:#e3e9f1;--panel:#f6f8fb;--chip:#dbe3ee;--ink:#1a2233;--ink2:#566179;--edge:#1a2233;
   --accent:#1f7a8c;--accent-ink:#ffffff;--good:#2a8f50;--bad:#c93838;--warn:#b57a0c;
   --zr:#3f9a44;--zc:#3b82d6;--zi:#d9a91f;
-  --font-ui:"Pixelify Sans","Trebuchet MS",system-ui,sans-serif;
-  --font-px:"Silkscreen","Courier New",ui-monospace,monospace;
   --font-num:"Space Mono","Courier New",ui-monospace,monospace;
+  --font-ui:var(--font-num);
+  --font-px:var(--font-num);
 }
 @media (prefers-color-scheme:dark){
   :root:not([data-theme="light"]){
@@ -77,6 +77,28 @@ canvas#map{position:absolute;inset:0;width:100%;height:100%;touch-action:none;di
 .toast.on{opacity:1}
 .banner{position:absolute;left:6px;right:6px;bottom:44px;background:var(--panel);border:2px solid var(--edge);padding:8px;font-size:13px;display:grid;gap:6px}
 .hint{font-size:13px;color:var(--ink2);min-height:18px;line-height:1.3}
+.app.visiting .tools,.app.visiting .cats,.app.visiting .hint,.app.visiting .tut,.app.visiting .toolpill,.app.visiting #menuBtn,.app.visiting #speed,.app.visiting .confirm{display:none!important}
+.visbar{position:absolute;left:6px;right:52px;top:6px;z-index:6;background:#164a7a;color:#fff;border:3px solid #9fd0ff;box-shadow:0 4px 0 var(--edge);padding:8px 10px;display:flex;gap:8px;align-items:center;flex-wrap:wrap;font-size:13px}
+.visbar b{flex:1;min-width:120px}
+.visbar .btn{background:#fff;color:#1a2233}
+.chipb{cursor:pointer}.chipb:focus-visible,.chipb:hover{outline:3px solid var(--accent);outline-offset:1px}
+.infoal{display:flex;gap:10px;align-items:flex-start;padding:8px;border:2px solid var(--bad);background:rgba(224,70,70,.12);margin:0 0 6px;line-height:1.35}
+.hasb{position:relative}
+.nbadge{position:absolute;top:-8px;right:-6px;min-width:22px;height:22px;border-radius:11px;background:var(--bad);color:#fff;font:700 12px var(--font-ui);display:grid;place-items:center;padding:0 5px;border:2px solid var(--edge);z-index:3}
+:root[data-cb="1"]{--good:#0072B2!important;--warn:#E69F00!important;--bad:#D55E00!important}
+@media (prefers-color-scheme:dark){:root[data-cb="1"]:not([data-theme="light"]){--good:#56B4E9!important;--warn:#F0E442!important;--bad:#FF8A3D!important}}
+:root[data-cb="1"][data-theme="dark"]{--good:#56B4E9!important;--warn:#F0E442!important;--bad:#FF8A3D!important}
+:root[data-cb="1"] .s-ok::before{content:"+ "}
+:root[data-cb="1"] .s-warn::before{content:"! "}
+:root[data-cb="1"] .s-bad::before,:root[data-cb="1"] .neg::before{content:"- "}
+.tilehid{display:none!important}
+.mtiles{display:grid;grid-template-columns:repeat(auto-fill,minmax(130px,1fr));gap:10px}
+.mtile{display:grid;gap:6px;justify-items:start;align-content:center;min-height:92px;padding:10px;text-align:left;background:var(--panel);border:2px solid var(--edge);box-shadow:0 3px 0 var(--edge);font-family:var(--font-px);font-size:12px;font-weight:700;color:var(--ink);cursor:pointer}
+.mtile:active{transform:translateY(2px);box-shadow:0 1px 0 var(--edge)}
+.mtile i{font-style:normal;display:grid;place-items:center;width:34px;height:34px;border:2px solid var(--edge);color:#fff;font-size:15px;font-family:var(--font-px)}
+.mtile small{font-family:var(--font-ui);font-size:12px;font-weight:400;color:var(--ink2);line-height:1.25}
+.helpsearch{margin:6px 0 10px}
+@media (pointer:coarse){.btn{min-height:46px;padding:10px 14px}.btns{gap:10px}.sheet{gap:16px}.sheet summary,.help summary{min-height:44px}input[type=text],input[type=email],input[type=password]{min-height:46px}}
 .tools{position:relative;display:flex;gap:6px;overflow-x:auto;padding:2px 2px 6px;scrollbar-width:none}
 .tools::-webkit-scrollbar{display:none}
 .tool{flex:0 0 auto;width:60px;background:var(--panel);border:2px solid var(--edge);box-shadow:0 3px 0 var(--edge);display:grid;justify-items:center;gap:2px;padding:4px 2px 3px}
@@ -94,7 +116,7 @@ canvas#map{position:absolute;inset:0;width:100%;height:100%;touch-action:none;di
 .kv span:nth-child(odd){color:var(--ink2)}
 .kv span:nth-child(even){text-align:right}
 input[type=range]{width:100%;accent-color:var(--accent);height:32px}
-input[type=text],textarea{width:100%;font:inherit;background:var(--bg);color:var(--ink);border:2px solid var(--edge);padding:8px;min-height:40px}
+input[type=text],input[type=email],input[type=password],textarea{width:100%;font:inherit;background:var(--bg);color:var(--ink);border:2px solid var(--edge);padding:8px;min-height:40px}
 textarea{min-height:70px;font-family:var(--font-px);font-size:11px;resize:vertical;word-break:break-all}
 .btns{display:flex;gap:8px;flex-wrap:wrap}
 .note{font-size:13px;color:var(--ink2);line-height:1.4}
@@ -180,6 +202,19 @@ button.chip{font:inherit;color:inherit;cursor:pointer;box-shadow:0 3px 0 var(--e
 .help ul{margin:6px 0;padding-left:18px}
 .leg{display:flex;gap:10px;align-items:center;margin:6px 0;font-size:14px;line-height:1.35}
 .leg canvas{width:32px;height:32px;image-rendering:pixelated;flex:none;border:2px solid var(--edge)}
+@media (min-width:900px) and (min-height:560px){
+  body{padding-top:12px;padding-bottom:12px}
+  .app{display:grid;grid-template-columns:minmax(0,1fr) 400px;grid-template-rows:auto auto auto auto minmax(0,1fr);column-gap:12px;row-gap:8px}
+  header{grid-column:2;grid-row:1}
+  .mapwrap{grid-column:1;grid-row:1/-1;min-height:0}
+  .hint{grid-column:2;grid-row:2}
+  .tut{grid-column:2;grid-row:3}
+  .cats{grid-column:2;grid-row:4}
+  .tools{grid-column:2;grid-row:5;flex-wrap:wrap;overflow-x:hidden;overflow-y:auto;align-content:flex-start;scrollbar-width:thin}
+  .tool{width:84px}
+  .shade{align-items:center;justify-content:center;padding:24px}
+  .sheet{width:min(640px,100%);max-height:90%}
+}
 @media (prefers-reduced-motion:reduce){.toast{transition:none}.tut{animation:none}.disbanner{animation:none}}
 </style>
 
@@ -246,6 +281,7 @@ button.chip{font:inherit;color:inherit;cursor:pointer;box-shadow:0 3px 0 var(--e
   <div class="shade" id="infoShade" hidden style="align-items:center;justify-content:center;padding:16px">
     <div class="sheet" style="width:min(360px,100%);max-height:80%" role="dialog" aria-label="Fiche de la case">
       <div class="row" style="flex-wrap:nowrap"><canvas id="infoIco" width="16" height="16" style="width:44px;height:44px;image-rendering:pixelated;border:2px solid var(--edge);flex:none"></canvas><div class="title" id="infoTitle" style="white-space:normal"></div><button class="btn" id="infoClose">Fermer</button></div>
+      <div id="infoAlert" hidden></div>
       <table class="tbl" id="infoTbl"></table>
       <div class="note" id="infoTip"></div>
       <div class="btns"><button class="btn primary" id="buyBtn" hidden>Acheter</button></div>
@@ -308,6 +344,21 @@ button.chip{font:inherit;color:inherit;cursor:pointer;box-shadow:0 3px 0 var(--e
         <div class="btns"><button class="btn primary" id="nbOpen">Villes voisines</button></div>
       </div>
 
+      <div class="sec" id="accSec">
+        <h2>COMPTE ET CLOUD</h2>
+        <div class="st" id="accSt">Non connecté. Ta ville reste sur cet appareil.</div>
+        <div id="accForm">
+          <label for="accMail" class="note">E-mail</label>
+          <input type="email" id="accMail" autocomplete="email" maxlength="80">
+          <label for="accPw" class="note">Mot de passe (6 caractères au moins)</label>
+          <input type="password" id="accPw" autocomplete="current-password" maxlength="80">
+          <div class="btns"><button class="btn primary" id="accNew">Créer mon compte</button><button class="btn" id="accIn">Me connecter</button><button class="btn" id="accForgot">Mot de passe oublié</button></div>
+        </div>
+        <div id="accBox" hidden>
+          <div class="btns"><button class="btn primary" id="accSave">Sauvegarder dans le cloud</button><button class="btn" id="accLoad">Charger depuis le cloud</button><button class="btn" id="accOut">Me déconnecter</button></div>
+        </div>
+      </div>
+
       <div class="sec">
         <h2>SAUVEGARDE ET PARTIE</h2>
         <div class="st" id="st"></div>
@@ -322,9 +373,24 @@ button.chip{font:inherit;color:inherit;cursor:pointer;box-shadow:0 3px 0 var(--e
       </div>
 
       <div class="sec">
-        <h2>BUDGET</h2>
-        <label for="tax">Taux d'imposition : <b id="taxv">9</b> %</label>
+        <div class="row" style="flex-wrap:nowrap;align-items:center"><h2 style="flex:1">BUDGET</h2><button class="btn" id="budHelp" aria-label="Conseils pour régler le budget" title="Conseils pour régler le budget" style="min-width:44px;font-weight:700">?</button></div>
+        <div class="note"><b>Impôts</b></div>
+        <label for="tax">Taxe des habitants : <b id="taxv">9</b> %</label>
         <input type="range" id="tax" min="0" max="20" step="1" value="9">
+        <label for="taxC">Taxe des commerces : <b id="taxCv">9</b> %</label>
+        <input type="range" id="taxC" min="0" max="20" step="1" value="9">
+        <label for="taxI">Taxe de l'industrie : <b id="taxIv">9</b> %</label>
+        <input type="range" id="taxI" min="0" max="20" step="1" value="9">
+        <div class="note" id="taxN"></div>
+        <div class="note" style="margin-top:6px"><b>Dépenses</b> (100 % = normal)</div>
+        <label for="svRd">Voirie et transports : <b id="svRdv">100</b> % <span id="svRdc"></span></label>
+        <input type="range" id="svRd" min="0" max="150" step="10" value="100"><div class="note" id="svRdn"></div>
+        <label for="svSf">Police et pompiers : <b id="svSfv">100</b> % <span id="svSfc"></span></label>
+        <input type="range" id="svSf" min="0" max="150" step="10" value="100"><div class="note" id="svSfn"></div>
+        <label for="svHl">Santé et éducation : <b id="svHlv">100</b> % <span id="svHlc"></span></label>
+        <input type="range" id="svHl" min="0" max="150" step="10" value="100"><div class="note" id="svHln"></div>
+        <label for="svUt">Parcs, eau, énergie, déchets : <b id="svUtv">100</b> % <span id="svUtc"></span></label>
+        <input type="range" id="svUt" min="0" max="150" step="10" value="100"><div class="note" id="svUtn"></div>
         <div class="kv">
           <span>Revenus par mois</span><span id="bInc">0</span>
           <span>Dépenses par mois</span><span id="bExp">0</span>
@@ -343,6 +409,7 @@ button.chip{font:inherit;color:inherit;cursor:pointer;box-shadow:0 3px 0 var(--e
         <div class="kv"><span>Rang</span><span id="rank">0</span><span>Prochain rang</span><span id="rankNext">0</span></div>
         <label class="chk" for="autoM"><input type="checkbox" id="autoM"> Fusion automatique des blocs de niveau 3 ou plus</label>
         <div class="note">Un nouveau rang rapporte une prime et débloque des bâtiments.</div>
+        <label class="chk" for="cbOn"><input type="checkbox" id="cbOn"> Mode daltonien (couleurs adaptées, lettres R, C, I sur les zones, symboles + ! -)</label>
       </div>
 
       <div class="sec">
@@ -402,8 +469,7 @@ button.chip{font:inherit;color:inherit;cursor:pointer;box-shadow:0 3px 0 var(--e
       <div class="sec">
         <h2>PROCHAINES ÉTAPES</h2>
         <ul class="road-list">
-          <li>Voisinage : visiter la ville d'un ami</li>
-          <li>Échanges de courant et d'eau, projets communs, classement</li>
+          <li>Échanges de courant et d'eau entre villes, projets communs, classement</li>
         </ul>
       </div>
 
@@ -415,6 +481,7 @@ button.chip{font:inherit;color:inherit;cursor:pointer;box-shadow:0 3px 0 var(--e
 <div class="shade" id="helpShade" hidden>
   <div class="sheet help" role="dialog" aria-label="Centre d'aide">
     <div class="row"><div class="title">Centre d'aide</div><button class="btn" id="helpClose">Fermer</button></div>
+    <div class="btns" id="tutTop"><button class="btn primary" id="tutRestart">Relancer le didacticiel</button></div>
     <div>
       <details open><summary>Bien démarrer</summary>
         <p>Une ville a besoin de routes, de zones, de courant et d'eau. L'ordre conseillé :</p>
@@ -425,10 +492,18 @@ button.chip{font:inherit;color:inherit;cursor:pointer;box-shadow:0 3px 0 var(--e
         <ul><li>Outil Main : un appui ouvre la fiche de la case sans rien construire. Un appui long fait de même avec n'importe quel outil.</li><li>Raser demande toujours une confirmation.</li><li>Autres outils : un doigt déplace la carte, un appui construit. Pour les routes et les zones, le bouton Tracer permet de poser en glissant.</li><li>Pompe, centrale, commissariat, caserne, parc : un appui affiche un aperçu avec son rayon (vert si possible, rouge sinon), puis Valider.</li><li>Deux doigts : déplace la carte, pince pour zoomer.</li><li>Les outils de construction sont rangés par catégorie : Zones, Réseaux, Services, Loisirs. Main et Raser restent toujours à portée.</li><li>Boutons + et - : zoom. Bouton Tout : vue de toute la ville.</li></ul>
       </details>
       <details><summary>Les alertes sur les bâtiments</summary>
-        <div class="leg"><canvas data-spr="noRoad" width="8" height="8"></canvas><span>Pas de route à portée. Une zone doit toucher une route, ou être reliée à une zone voisine qui en touche une (2 cases au plus).</span></div>
-        <div class="leg"><canvas data-spr="noPower" width="8" height="8"></canvas><span>Pas de courant. La case est hors du rayon d'une centrale, ou le réseau est saturé.</span></div>
         <div class="leg"><canvas data-spr="noWater" width="8" height="8"></canvas><span>Pas d'eau. Pose une pompe à eau près d'un lac ou d'une rivière.</span></div>
-        <div class="leg"><canvas data-spr="noServ" width="8" height="8"></canvas><span>Point d'exclamation rose : un service manque pour monter de niveau. Haute densité : hôpital et école. Industrie propre : école, puis université. Niveau 3 : collecte des déchets (dès 150 habitants). Touche la case pour voir lequel.</span></div>
+        <div class="leg"><canvas data-spr="noRoad" width="8" height="8"></canvas><span>Route : la zone n'est pas reliée à une route.</span></div>
+        <div class="leg"><canvas data-spr="noPower" width="8" height="8"></canvas><span>Éclair : pas de courant, ou réseau saturé.</span></div>
+        <div class="leg"><canvas data-spr="noWater" width="8" height="8"></canvas><span>Goutte : pas d'eau, ou réseau saturé.</span></div>
+        <div class="leg"><canvas data-spr="ns_hosp" width="8" height="8"></canvas><span>Croix : il manque un hôpital à portée.</span></div>
+        <div class="leg"><canvas data-spr="ns_school" width="8" height="8"></canvas><span>Livre : il manque une école ou une université.</span></div>
+        <div class="leg"><canvas data-spr="ns_waste" width="8" height="8"></canvas><span>Poubelle : il manque une collecte des déchets.</span></div>
+        <div class="leg"><canvas data-spr="ns_trans" width="8" height="8"></canvas><span>Bus : il manque des transports en commun.</span></div>
+        <div class="leg"><canvas data-spr="ns_value" width="8" height="8"></canvas><span>Flèche : la valeur du terrain est trop basse.</span></div>
+        <div class="leg"><canvas data-spr="ns_safe" width="8" height="8"></canvas><span>Bouclier : criminalité ou pollution trop élevée.</span></div>
+        <div class="leg"><canvas data-spr="ns_rank" width="8" height="8"></canvas><span>Silhouette : la ville n'a pas encore assez d'habitants pour ce niveau.</span></div>
+        <p>Touche le bâtiment : la fiche affiche en haut un encadré rouge qui explique la cause de l'alerte et comment la corriger.</p>
         <div class="leg"><canvas data-spr="flame.0" width="16" height="16"></canvas><span>Incendie. Une caserne l'éteint 4 fois plus vite.</span></div>
         <p>Une zone qui garde une alerte ne grandit plus et peut perdre des niveaux.</p>
       </details>
@@ -519,6 +594,10 @@ button.chip{font:inherit;color:inherit;cursor:pointer;box-shadow:0 3px 0 var(--e
       </details>
       <details><summary>Villes voisines</summary>
         <p>Menu, Voisins : tu échanges des codes avec tes amis par message (carte de visite, chèque d'aide). Tu vois leurs villes, tu peux leur envoyer de l'aide (20 % de ta caisse et 50 000 € par mois au plus), conclure un commerce (revenus plus 3 % chacun, trois accords au plus) et ouvrir une route de liaison (outil Liaison, onglet Transports, 800 habitants). Une route de liaison attire des visiteurs seulement si le voisin a construit la sienne et accepté la liaison. Aucun compte spécial n'est nécessaire. Les codes peuvent être falsifiés : à utiliser entre amis.</p>
+      
+        <p>Mode direct (Menu, Voisins, Villes en direct) : si tu l'actives, ta ville est publiée sur un serveur avec un identifiant anonyme. Tu vois les villes des autres joueurs, tu peux les visiter en lecture seule (bouton Retour à ma ville), leur envoyer de l'aide, proposer un commerce ou une liaison. Le bouton Arrêter le mode direct efface ta ville du serveur. Si tu vides les données du navigateur, tu perds ton identifiant.</p>
+      
+        <p>En mode direct, plus aucun code : une pastille rouge sur Menu et sur Voisins signale les propositions de commerce ou de liaison que tu reçois (Accepter ou Refuser). Tu peux envoyer un message court (Merci, Besoin d'aide, Bienvenue, Bravo) et indiquer de quel côté se trouve chaque voisin (gauche, droite, haut, bas) : une étiquette apparaît alors au bord de la carte. Le classement compare les villes en ligne.</p>
       </details>
       <details><summary>Événements et conseil municipal</summary>
         <p>Chaque mois, un événement peut survenir (grève, épidémie, festival, canicule, investisseur, scandale, neige). Tu choisis une réponse, souvent payante. Le jeu se met en pause pendant ton choix. Tu peux désactiver les événements dans le menu.</p>
@@ -564,6 +643,7 @@ button.chip{font:inherit;color:inherit;cursor:pointer;box-shadow:0 3px 0 var(--e
       </details>
       <details><summary>Budget et impôts</summary>
         <ul><li>Chaque mois, les impôts rapportent des fonds selon les habitants et les emplois.</li><li>Routes, centrales, pompes et services coûtent un entretien mensuel.</li><li>Un impôt élevé freine la croissance et l'humeur. Autour de 9 % est un bon départ.</li></ul>
+        <p>Budget détaillé (touche la case Fonds en haut, ou Menu, Budget) : trois taxes séparées (habitants, commerces, industrie) et quatre curseurs de dépenses de 0 à 150 % : voirie et transports, police et pompiers, santé et éducation, parcs, eau, énergie et déchets. Baisser un curseur économise de l'argent, mais dégrade le service : plus d'embouteillages, de criminalité, d'incendies, moins de capacité en eau et en courant. Les commerces et l'industrie réagissent à leur propre taxe : trop haute, la demande de nouvelles zones chute.</p>
       </details>
       <details><summary>Les vues colorées</summary>
         <p>Le bouton Vue en bas à gauche de la carte ouvre une liste : courant, eau, criminalité, pompiers, pollution et trafic. Chaque vue colore la carte pour montrer les zones couvertes ou touchées.</p>
@@ -578,7 +658,6 @@ button.chip{font:inherit;color:inherit;cursor:pointer;box-shadow:0 3px 0 var(--e
         <ul><li>La partie se sauvegarde seule sur ton appareil et dans le cloud si ton accès le permet.</li><li>Le code de secours du menu te permet de reprendre une partie ailleurs.</li><li>Chaque joueur a sa propre ville.</li></ul>
       </details>
     </div>
-    <div class="btns"><button class="btn primary" id="tutRestart">Relancer le didacticiel</button></div>
   </div>
 </div>
 
@@ -747,10 +826,34 @@ var SPR={grass:[],water:[],tree:[],road:[],R:[],C:[],I:[],Rx:[],Cx:[],Ic:[]};
     px(g,"#f5c542",1,1,2,3);px(g,"#f5c542",29,1,2,3);px(g,"#f5c542",1,28,2,3);px(g,"#f5c542",29,28,2,3);px(g,"#6b7b88",2,1,1,3);px(g,"#6b7b88",29,1,1,3);
   });
   SPR.stdQ=[0,1,2,3].map(function(q){return mk(16,function(g){g.drawImage(SPR.stadium,(q&1)*16,(q>>1)*16,16,16,0,0,16,16)})});
-  SPR.noPower=mk(8,function(g){px(g,"#f5c542",0,0,8,8);px(g,"#3b2f00",4,1,1,3);px(g,"#3b2f00",3,3,2,1);px(g,"#3b2f00",3,4,1,3)});
-  SPR.noRoad=mk(8,function(g){px(g,"#e04646",0,0,8,8);px(g,"#ffffff",1,3,6,2)});
-  SPR.noWater=mk(8,function(g){px(g,"#2f88c8",0,0,8,8);px(g,"#ffffff",3,1,2,1);px(g,"#ffffff",2,2,4,3);px(g,"#ffffff",3,5,2,1)});
-  SPR.noServ=mk(8,function(g){px(g,"#d6538a",0,0,8,8);px(g,"#ffffff",3,1,2,4);px(g,"#ffffff",3,6,2,1)});
+  function badge(fill,fg,rows){return mk(8,function(g){
+    px(g,"#1a2233",1,0,6,8);px(g,"#1a2233",0,1,8,6);px(g,fill,1,1,6,6);
+    var y,x;for(y=0;y<6;y++)for(x=0;x<6;x++)if(rows[y][x]==="#")px(g,fg,x+1,y+1,1,1)})}
+  var GL={
+    bolt:["...##.","..##..",".####.","..##..",".##...","##...."],
+    road:["#....#","#.##.#","#....#","#.##.#","#....#","#.##.#"],
+    drop:["..##..","..##..",".####.","######","######",".####."],
+    cross:["..##..","..##..","######","######","..##..","..##.."],
+    book:[".####.","######","#.##.#","#.##.#","######",".#..#."],
+    bin:["..##..","######",".#..#.",".#..#.",".#..#.",".####."],
+    bus:["######","#....#","######","######",".#..#.",".#..#."],
+    up:["..##..",".####.","######","..##..","..##..","..##.."],
+    shield:["######","######","######",".####.","..##..","......"],
+    people:["..##..","..##..",".####.","######","#.##.#","#....#"],
+    bang:["..##..","..##..","..##..","..##..","......","..##.."]
+  };
+  SPR.noPower=badge("#f5c542","#3b2f00",GL.bolt);
+  SPR.noRoad=badge("#e04646","#ffffff",GL.road);
+  SPR.noWater=badge("#2f88c8","#ffffff",GL.drop);
+  SPR.ns_hosp=badge("#d6538a","#ffffff",GL.cross);
+  SPR.ns_school=badge("#3f6fb5","#ffffff",GL.book);
+  SPR.ns_waste=badge("#7a6a4a","#ffffff",GL.bin);
+  SPR.ns_trans=badge("#6f6f78","#ffffff",GL.bus);
+  SPR.ns_value=badge("#c99a12","#3b2f00",GL.up);
+  SPR.ns_safe=badge("#2f7d32","#ffffff",GL.shield);
+  SPR.ns_rank=badge("#7a5ab5","#ffffff",GL.people);
+  SPR.ns_gen=badge("#d6538a","#ffffff",GL.bang);
+  SPR.noServ=SPR.ns_gen;
   SPR.coin=mk(8,function(g){px(g,"#f5c542",2,0,4,8);px(g,"#f5c542",0,2,8,4);px(g,"#f5c542",1,1,6,6);px(g,"#b58a12",3,2,2,4)});
   SPR.flame=[mk(16,function(g){px(g,"#e8541a",4,8,8,6);px(g,"#e8541a",6,5,3,4);px(g,"#f5a31a",5,9,6,5);px(g,"#f5a31a",7,6,2,3);px(g,"#ffe14a",7,10,3,4)}),
              mk(16,function(g){px(g,"#e8541a",3,9,9,5);px(g,"#e8541a",8,4,3,6);px(g,"#f5a31a",5,9,6,5);px(g,"#f5a31a",8,6,2,4);px(g,"#ffe14a",6,11,3,3)})];
@@ -760,7 +863,7 @@ var SPR={grass:[],water:[],tree:[],road:[],R:[],C:[],I:[],Rx:[],Cx:[],Ic:[]};
 SPR.stadiumIco=SPR.stdQ[0];
 
 /* ---------- état ---------- */
-var S=null,cam={x:0,y:0,s:2},tool="pan",ovMode=0,touched=false;
+var S=null,cam={x:0,y:0,s:2},tool="pan",ovMode=0,touched=false,visiting=false,CB=false;
 var cover=new Uint8Array(N),wcover=new Uint8Array(N),pcover=new Uint8Array(N),fcover=new Uint8Array(N),hcover=new Uint8Array(N),ecover=new Uint8Array(N),twOn=new Uint8Array(N),roadAdj=new Uint8Array(N),tcover=new Uint8Array(N),wscover=new Uint8Array(N),wccover=new Uint8Array(N),crimeX=new Uint8Array(N),jcover=new Uint8Array(N),noiseA=new Uint8Array(N);
 var crime=new Uint8Array(N),poll=new Uint8Array(N),fire=new Uint8Array(N),amen=new Uint8Array(N),lv=new Uint8Array(N),traffic=new Float32Array(N),tmpF=new Float32Array(N),polF=new Float32Array(N);
 var ST={P:0,Jc:0,Ji:0,load:0,cap:0,wcap:0,roads:0,plants:0,pumps:0,towers:0,towersOn:0,police:0,fires:0,leisure:0,dR:0,dC:0,dI:0,sat:0,inc:0,exp:0,tour:0,powerOK:true,waterOK:true,crime:0,poll:0,cong:0,burning:0,hShare:1,eShare:1,lvAvg:0,wload:0,wcapT:0,wunc:0,wasteOK:true,dumps:0,transit:0,gain:0,trade:0,lawCost:0,noise:0,amAvg:0,unemp:false,wreq:false};
@@ -802,6 +905,26 @@ function gateWhy(t,d,l,i){
   }
   return "";
 }
+function gateKind(m,rk){
+  if(rk)return "rank";
+  if(/hôpital/.test(m))return "hosp";
+  if(/école|université/.test(m))return "school";
+  if(/Déchets|incinérateur|recyclage/.test(m))return "waste";
+  if(/transport/.test(m))return "trans";
+  if(/valeur du terrain/.test(m))return "value";
+  if(/criminalité|pollution/.test(m))return "safe";
+  return "gen";
+}
+function alertOf(i,t){
+  if(!roadAdj[i])return {s:"noRoad",w:"Pas de route à portée",f:"Pose une route à côté, ou relie cette zone à une zone qui touche une route (2 cases d'une route au plus)."};
+  if(!cover[i])return {s:"noPower",w:"Pas de courant",f:"Construis une centrale à portée de cette zone."};
+  if(!ST.powerOK)return {s:"noPower",w:"Réseau électrique saturé",f:"Ajoute une centrale : la consommation dépasse la production."};
+  if(!wcover[i])return {s:"noWater",w:"Pas d'eau",f:"Pose une pompe à eau ou un château d'eau à portée."};
+  if(!ST.waterOK)return {s:"noWater",w:"Réseau d'eau saturé",f:"Ajoute une pompe à eau."};
+  var l=S.lvl[i],d=S.dens[i];
+  if(l>0&&l<maxLvl(t,d)){var gw=gateWhy(t,d,l,i),rw=gw?"":rankWhy(l),m=gw||rw;if(m)return {s:"ns_"+gateKind(m,!!rw),w:"La zone ne peut plus monter de niveau",f:m}}
+  return null;
+}
 function rankWhy(l){var g=l+1;if(g>=4&&(S.peak||0)<LVPEAK[g])return "Niveau "+g+" : la ville doit d'abord atteindre "+fmt(LVPEAK[g])+" habitants.";return ""}
 function gateOk(t,d,l,i){return gateWhy(t,d,l,i)===""&&rankWhy(l)===""}
 
@@ -842,7 +965,7 @@ function rleEnc(){
   return btoa(out);
 }
 function serialize(){
-  return {v:2,W:W,H:H,name:S.name,day:S.day,funds:S.funds,tax:S.tax,speed:S.speed,dis:S.dis,tut:S.tut,peak:S.peak||0,auto:S.auto!==false,stats:S.stats,chain:S.chain||[],sf:S.sf||{},nbk:nbk(),ach:S.ach,tier:S.tier,diff:S.diff,scn:S.scn,laws:S.laws,fx:S.fx,ev:S.ev!==false,cars:S.cars!==false,dn:S.dn!==false,sea:S.sea!==false,mode:S.mode,timedDone:!!S.timedDone,rle3:rleEnc(),own:Array.prototype.join.call(S.own,""),cam:{x:cam.x,y:cam.y,s:cam.s},ts:Date.now()};
+  return {v:2,W:W,H:H,name:S.name,day:S.day,funds:S.funds,tax:S.tax,speed:S.speed,dis:S.dis,tut:S.tut,peak:S.peak||0,auto:S.auto!==false,stats:S.stats,chain:S.chain||[],sf:S.sf||{},nbk:nbk(),tx:S.tx,sv:S.sv,ach:S.ach,tier:S.tier,diff:S.diff,scn:S.scn,laws:S.laws,fx:S.fx,ev:S.ev!==false,cars:S.cars!==false,dn:S.dn!==false,sea:S.sea!==false,mode:S.mode,timedDone:!!S.timedDone,rle3:rleEnc(),own:Array.prototype.join.call(S.own,""),cam:{x:cam.x,y:cam.y,s:cam.s},ts:Date.now()};
 }
 function loadState(o){
   if(!o||(o.v!==1&&o.v!==2))throw new Error("format");
@@ -866,6 +989,9 @@ function loadState(o){
   }else throw new Error("format");
   if(typeof o.own==="string"&&o.own.length===GP*GP){s.own=new Uint8Array(GP*GP);for(i=0;i<GP*GP;i++)s.own[i]=o.own[i]==="1"?1:0}
   for(i=0;i<N;i++){if(s.tiles[i]>47)s.tiles[i]=0;if(s.dens[i]>3)s.dens[i]=0;if(s.big[i]>63)s.big[i]=0;if(s.lvl[i]>8)s.lvl[i]=8}
+  (function(){function cl(v,a,b,d){v=(typeof v==="number")?v:NaN;return isFinite(v)?Math.max(a,Math.min(b,Math.round(v))):d}
+    s.tx={c:cl(o.tx&&o.tx.c,0,20,s.tax),i:cl(o.tx&&o.tx.i,0,20,s.tax)};
+    s.sv={rd:cl(o.sv&&o.sv.rd,0,150,100),sf:cl(o.sv&&o.sv.sf,0,150,100),hl:cl(o.sv&&o.sv.hl,0,150,100),ut:cl(o.sv&&o.sv.ut,0,150,100)}})();
   S=s;fire.fill(0);
   if(o.cam){cam.x=(+o.cam.x||0)+camOff;cam.y=(+o.cam.y||0)+camOff;cam.s=Math.max(MINZ,Math.min(4,+o.cam.s||2))}
   recompute();S.peak=Math.max(S.peak||0,ST.P);syncUI();draw();
@@ -877,9 +1003,19 @@ function stampAdd(arr,x,y,R,val){var dx,dy,a,b,j;for(dy=-R;dy<=R;dy++)for(dx=-R;
 function addPoll(x,y,v,R){var dx,dy,a,b;for(dy=-R;dy<=R;dy++)for(dx=-R;dx<=R;dx++){a=x+dx;b=y+dy;if(a>=0&&b>=0&&a<W&&b<H)polF[b*W+a]+=v/(1+Math.hypot(dx,dy))}}
 function nearWater(x,y,R){var dx,dy,a,b;for(dy=-R;dy<=R;dy++)for(dx=-R;dx<=R;dx++){a=x+dx;b=y+dy;if(a>=0&&b>=0&&a<W&&b<H&&S.tiles[b*W+a]===T.W)return true}return false}
 function roadNb(x,y){var l=[],dx,dy,a,b;for(dy=-1;dy<=1;dy++)for(dx=-1;dx<=1;dx++){a=x+dx;b=y+dy;if(a>=0&&b>=0&&a<W&&b<H&&S.tiles[b*W+a]===T.RD)l.push(b*W+a)}return l}
+function budEnsure(){if(!S.tx)S.tx={c:S.tax,i:S.tax};if(!S.sv)S.sv={rd:100,sf:100,hl:100,ut:100}}
+function bfU(v){return v<100?.55+.45*v/100:1+(v/100-1)*.1}
+function bfH(v){return v<100?.5+.5*v/100:1+(v/100-1)*.2}
+function bfC(v){return v<100?1+(1-v/100)*.8:Math.max(.7,1-(v/100-1)*.3)}
+function bcat(k){var b=BLD[k];if(!b)return "";if(b.base)b=BLD[b.base]||b;k=b.base||k;
+  if(k==="police"||k==="fire"||k==="prison"||k==="court")return "sf";
+  if(k==="hosp"||k==="school"||k==="uni")return "hl";
+  if(b.cat==="net"||b.cat==="fun"||b.wst)return "ut";
+  if(b.cat==="trn")return "rd";
+  return "";}
 function recompute(){
   var i,x,y,t,l,d,id,b,k,cx,bg,bm,n,dx,dy,okr;
-  fixBig();
+  fixBig();budEnsure();
   tcover.fill(0);wscover.fill(0);wccover.fill(0);cover.fill(0);wcover.fill(0);twOn.fill(0);pcover.fill(0);fcover.fill(0);hcover.fill(0);ecover.fill(0);amen.fill(0);brN=0;roadAdj.fill(0);crime.fill(0);traffic.fill(0);polF.fill(0);crimeX.fill(0);jcover.fill(0);noiseA.fill(0);
   var towers=[],tourL=[],P=0,Jc=0,Ji=0,load=0,roads=0,cap=0,wcap=0,plants=0,pumps=0,police=0,fires=0,leisure=0,burning=0,wload=0,wcapT=0,transitN=0,dumps=0,wuncN=0,wreq=(S.peak||0)>=150,wadv=(S.peak||0)>=60,gainL=[],jobsL=[],tradeL=[],coalN=0,fx=fxAgg(),seas=S.sea===false?-1:seasonIdx(),lm=(seas<0?1:SEAS_L[seas])*fx.load,polM=lawOn('green')?.75:1,crimeM=lawOn('curfew')?.75:1,trafM=lawOn('carfree')?.7:1,incM=lawOn('green')?.97:1,nogam=lawOn('nogamble');
   for(y=0;y<H;y++)for(x=0;x<W;x++){
@@ -961,29 +1097,29 @@ function recompute(){
     if(traffic[i]>8)cong++;
     if(traffic[i]>6)stampAdd(noiseA,x,y,2,10);
   }
-  var lvSum=0,lvN=0,incSum=0,v2;
+  var lvSum=0,lvN=0,incR=0,incC=0,incI=0,v2,v3;
   for(i=0;i<N;i++){
     t=S.tiles[i];if(t===T.W){lv[i]=0;continue}
     v2=40+Math.min(40,amen[i])+(pcover[i]?5:0)+(hcover[i]?6:0)+(ecover[i]?6:0)+(fcover[i]?4:0)+(wcover[i]?3:0)-poll[i]*40/255-crime[i]*.25+(t===T.ZR&&S.dens[i]===0?8:0)+tcover[i]*.12-(wreq&&!wscover[i]?6:0)-noiseA[i]*.15;
     lv[i]=Math.max(0,Math.min(100,Math.round(v2)));
     if(t>=T.ZR&&t<=T.ZI&&S.lvl[i]>0){
       lvSum+=lv[i];lvN++;
-      incSum+=(t===T.ZR?popOf(t,S.lvl[i],S.dens[i],S.big[i]):.8*popOf(t,S.lvl[i],S.dens[i],S.big[i]))*(.6+lv[i]/125)*(t===T.ZI&&S.dens[i]===1?1.25:1);
+      v3=(t===T.ZR?popOf(t,S.lvl[i],S.dens[i],S.big[i]):.8*popOf(t,S.lvl[i],S.dens[i],S.big[i]))*(.6+lv[i]/125)*(t===T.ZI&&S.dens[i]===1?1.25:1);if(t===T.ZR)incR+=v3;else if(t===T.ZC)incC+=v3;else incI+=v3;
     }
   }
-  ST.P=P;ST.Jc=Jc;ST.Ji=Ji;ST.load=load;ST.cap=cap;ST.wcap=wcap+tOn*BLD.tower.wcap;
+  ST.P=P;ST.Jc=Jc;ST.Ji=Ji;ST.load=load;ST.cap=cap*bfU(S.sv.ut);ST.wcap=(wcap+tOn*BLD.tower.wcap)*bfU(S.sv.ut);
   ST.roads=roads;ST.plants=plants;ST.pumps=pumps;ST.police=police;ST.fires=fires;ST.towers=towers.length;ST.towersOn=tOn;ST.leisure=leisure;ST.burning=burning;
   ST.powerOK=load*lm<=ST.cap;ST.waterOK=load*lm<=ST.wcap;
-  ST.wload=Math.round(wload);ST.wcapT=wcapT;ST.wasteOK=wload<=wcapT;ST.dumps=dumps;ST.transit=transitN;ST.wunc=nZ?wuncN/nZ:0;
-  ST.hShare=P?pH/P:1;ST.eShare=Math.min(1,(P?pE/P:1)+(lawOn('freeedu')?.15:0));ST.lvAvg=lvN?lvSum/lvN:0;
+  ST.wload=Math.round(wload);ST.wcapT=wcapT*bfU(S.sv.ut);ST.wasteOK=wload<=ST.wcapT;ST.dumps=dumps;ST.transit=transitN;ST.wunc=nZ?wuncN/nZ:0;
+  ST.hShare=Math.min(1,(P?pH/P:1)*bfH(S.sv.hl));ST.eShare=Math.min(1,((P?pE/P:1)+(lawOn('freeedu')?.15:0))*bfH(S.sv.hl));ST.lvAvg=lvN?lvSum/lvN:0;
   var adj=(S.tax-9)*.05;
   function cl(v){return Math.max(-1,Math.min(1,v))}
   ST.dR=cl((J*1.3+30-P)/(60+P*.3)-adj);
-  ST.dC=cl((P*.45+12-Jc)/(40+Jc*.3)-adj);
-  ST.dI=cl((P*.55+15-Ji)/(40+Ji*.3)-adj);
-  ST.crime=nZ?sumC/nZ:0;ST.poll=nR?sumP/nR:0;ST.cong=roads?cong/roads:0;
-  ST.noise=nR?sumN/nR:0;ST.amAvg=nAm?sumAm/nAm:0;ST.unemp=P>0&&J<P*.5;ST.wreq=wreq;
-  var sat=78-(S.tax-9)*3.5+Math.min(15,(nAm?sumAm/nAm:0)*.4);
+  ST.dC=cl((P*.45+12-Jc)/(40+Jc*.3)-(S.tx.c-9)*.05);
+  ST.dI=cl((P*.55+15-Ji)/(40+Ji*.3)-(S.tx.i-9)*.05);
+  ST.crime=(nZ?sumC/nZ:0)*bfC(S.sv.sf);ST.poll=nR?sumP/nR:0;ST.cong=(roads?cong/roads:0)*bfC(S.sv.rd);
+  ST.noise=nR?sumN/nR:0;ST.amAvg=(nAm?sumAm/nAm:0)*bfU(S.sv.ut);ST.unemp=P>0&&J<P*.5;ST.wreq=wreq;
+  var sat=78-(S.tax-9)*3.5+Math.min(15,ST.amAvg*.4)-(S.sv.rd<100?(1-S.sv.rd/100)*6:0);
   if(!ST.powerOK)sat-=25;if(!ST.waterOK)sat-=20;if(P>0&&J<P*.5)sat-=15;if(S.funds<0)sat-=10;
   if(P>150)sat-=(1-ST.hShare)*10;if(P>300)sat-=(1-ST.eShare)*8;
   if(wreq){sat-=ST.wunc*10;if(!ST.wasteOK)sat-=8}else if(wadv)sat-=ST.wunc*4
@@ -1002,12 +1138,13 @@ function recompute(){
   }
   for(kk=0;kk<tradeL.length;kk++){ti=tradeL[kk];if(roadAdj[ti]&&nearWater(ti%W,(ti-ti%W)/W,1))trade+=BLD[bv(ti)].trade*Math.min(1,Ji/150)}
   ST.gain=Math.round(gain);ST.trade=Math.round(trade);
-  ST.inc=Math.round((incSum*S.tax*.08+ST.tour+ST.gain+ST.trade)*incM*fx.inc*gm.inc*(1+.03*nbActive().d));
-  var ex=roads*MAINT.road+brN*2,lawCost=0,ck;
-  for(y=0;y<H;y++)for(x=0;x<W;x++){i=y*W+x;t=S.tiles[i];if(TYPEBLD[t]&&!isSub(i)){ck=BLD[bv(i)].maint;if(lawOn('cleansub')&&(t===T.WND||t===T.SOL||t===T.NUC))ck*=.5;ex+=ck}}
+  ST.inc=Math.round(((incR*S.tax+incC*S.tx.c+incI*S.tx.i)*.08+ST.tour+ST.gain+ST.trade)*incM*fx.inc*gm.inc*(1+.03*nbActive().d));
+  var bc={rd:(roads*MAINT.road+brN*2),sf:0,hl:0,ut:0},ex=0,lawCost=0,ck,cc;
+  for(y=0;y<H;y++)for(x=0;x<W;x++){i=y*W+x;t=S.tiles[i];if(TYPEBLD[t]&&!isSub(i)){ck=BLD[bv(i)].maint;if(lawOn('cleansub')&&(t===T.WND||t===T.SOL||t===T.NUC))ck*=.5;cc=bcat(bv(i));if(cc)bc[cc]+=ck;else ex+=ck}}
+  ST.bc={};['rd','sf','hl','ut'].forEach(function(q){ST.bc[q]=bc[q];ex+=bc[q]*S.sv[q]/100});
   LAWS.forEach(function(L){if(lawOn(L.id))lawCost+=L.cost});
   ST.social=Math.round(P*(.2+Math.min(.2,P/100000))*Math.min(1,P/600));
-  ST.lawCost=lawCost;ST.exp=Math.round((ex+ST.social)*gm.maint+lawCost);
+  ST.lawCost=lawCost;ST.exp=Math.round((ex+ST.social)*gm.maint+lawCost);ST.gmm=gm.maint;
 }
 function isOk(i){return roadAdj[i]&&cover[i]&&wcover[i]&&ST.powerOK&&ST.waterOK}
 function wipe(i){
@@ -1054,7 +1191,7 @@ function fires(){
   var list=[];for(i=0;i<N;i++)if(fire[i])list.push(i);
   list.forEach(function(i){
     if(!flammable(i)){fire[i]=0;return}
-    var cov=fcover[i],f=fire[i]-(cov?4:1),x=i%W,y=(i-x)/W;
+    var cov=fcover[i],f=fire[i]-(cov?Math.max(1,Math.round(4*bfH(S.sv.sf)*(S.sv.sf<100?1:1.2))):1),x=i%W,y=(i-x)/W;
     if(r()<(cov?.03:.12)){var d=[[1,0],[-1,0],[0,1],[0,-1]][Math.floor(r()*4)],nx=x+d[0],ny=y+d[1];if(nx>=0&&ny>=0&&nx<W&&ny<H)ignite(idx(nx,ny))}
     if(f>0)fire[i]=f;
     else{fire[i]=0;if(cov){if(S.lvl[i]>0)S.lvl[i]--}else wipe(i)}
@@ -1292,7 +1429,7 @@ var EVENTS=[
     {l:"Envoyer la police",cost:0,fn:function(){addFx("strike2",1);toast("Grève réprimée, tensions en ville")}}]},
   {id:"epid",t:"Épidémie",x:"Une maladie contagieuse se répand dans les quartiers denses.",ok:function(){return ST.P>=300},ch:[
     {l:"Campagne de vaccination",cost:4000,fn:function(){toast("Campagne efficace, l'épidémie est stoppée")}},
-    {l:"Ne rien faire",cost:0,fn:function(){addFx(ST.hShare>=.8?"epidMild":"epid",3);toast(ST.hShare>=.8?"Vos hôpitaux limitent les dégâts":"Épidémie de 3 mois : humeur en baisse")}}]},
+    {l:"Ne rien faire",cost:0,fn:function(){addFx(ST.hShare>=.8?"epidMild":"epid",3);toast(ST.hShare>=.8?"Tes hôpitaux limitent les dégâts":"Épidémie de 3 mois : humeur en baisse")}}]},
   {id:"festival",t:"Festival",x:"Des associations proposent d'organiser un grand festival en ville.",ok:function(){return ST.leisure>=2},ch:[
     {l:"Organiser le festival",cost:2500,fn:function(){addFx("festival",2);toast("Festival lancé : visiteurs et bonne humeur")}},
     {l:"Décliner",cost:0,fn:function(){toast("Le festival est annulé")}}]},
@@ -1310,16 +1447,16 @@ var EVENTS=[
     {l:"Ne rien faire",cost:0,fn:function(){addFx("snow",1);toast("Routes enneigées : activité ralentie")}}]}
 ];
 var LUCK=[
-  {id:"grant",t:"Subvention de l'État",x:"L'État soutient les villes en développement et vous accorde une aide.",ok:function(){return ST.P>=100},ch:[
+  {id:"grant",t:"Subvention de l'État",x:"L'État soutient les villes en développement et t'accorde une aide.",ok:function(){return ST.P>=100},ch:[
     {l:"Accepter la subvention",cost:0,fn:function(){var a=Math.min(25000,3000+ST.P*3);S.funds+=a;toast("Subvention reçue : "+eur(a),3500)}}]},
   {id:"legacy",t:"Legs d'un mécène",x:"Un riche habitant a légué une partie de sa fortune à la ville.",ok:function(){return ST.P>=500},ch:[
     {l:"Recevoir le don",cost:0,fn:function(){var a=6000+ST.P*2;S.funds+=a;toast("Don reçu : "+eur(a),3500)}},
     {l:"Créer une fondation",cost:0,fn:function(){addFx("mecene",12);toast("Fondation créée : revenus en hausse pendant 12 mois")}}]},
   {id:"celeb",t:"Une célébrité en visite",x:"Une personnalité célèbre visite la ville et en parle dans les médias.",ok:function(){return ST.leisure>=2},ch:[
     {l:"Lui réserver un accueil",cost:0,fn:function(){addFx("celeb",3);toast("Visiteurs et bonne humeur pendant 3 mois")}}]},
-  {id:"prizeclean",t:"Prix de la ville propre",x:"Votre ville obtient une récompense pour la qualité de son air.",ok:function(){return ST.P>=300&&ST.poll/2.55<12},ch:[
+  {id:"prizeclean",t:"Prix de la ville propre",x:"Ta ville obtient une récompense pour la qualité de son air.",ok:function(){return ST.P>=300&&ST.poll/2.55<12},ch:[
     {l:"Recevoir le prix",cost:0,fn:function(){S.funds+=5000;addFx("prix",6);toast("Prix reçu : 5 000 € et fierté des habitants")}}]},
-  {id:"prizesafe",t:"Prix de la ville sûre",x:"Le faible taux de criminalité de votre ville est salué.",ok:function(){return ST.P>=300&&ST.police>0&&ST.crime<12},ch:[
+  {id:"prizesafe",t:"Prix de la ville sûre",x:"Le faible taux de criminalité de ta ville est salué.",ok:function(){return ST.P>=300&&ST.police>0&&ST.crime<12},ch:[
     {l:"Recevoir le prix",cost:0,fn:function(){S.funds+=5000;addFx("prix",6);toast("Prix reçu : 5 000 € et fierté des habitants")}}]},
   {id:"oil",t:"Gisement découvert",x:"Des sondages révèlent un gisement sous un terrain communal.",ok:function(){return ST.P>=300},ch:[
     {l:"Exploiter le gisement",cost:6000,fn:function(){addFx("gisement",24);toast("Exploitation lancée : revenus en hausse pendant 24 mois")}},
@@ -1341,7 +1478,7 @@ var CHD={
 };
 EVENTS.concat(LUCK).forEach(function(e){e.ch.forEach(function(c){var d=CHD[e.id+"|"+c.l];if(d)c.d=d})});
 /* aide d'une ville voisine (prévu pour la fonction voisins) */
-function receiveAid(from,amount){S.funds+=amount;toast((from||"Une ville voisine")+" vous envoie "+eur(amount),3500);recompute();syncUI()}
+function receiveAid(from,amount){S.funds+=amount;if(typeof aidPopup==="function")aidPopup(from||"Une ville voisine",amount);else toast((from||"Une ville voisine")+" t'envoie "+eur(amount),3500);recompute();syncUI()}
 function triggerEvent(list){
   list=list||EVENTS;
   var c=list.filter(function(e){return e.ok()});if(!c.length)return;
@@ -1357,7 +1494,7 @@ function genTown(){
   for(y=cy-9;y<=cy-3;y++){put(cx-1,y,T.ZC,1,1);put(cx+1,y,T.ZC,1,1)}
   for(y=cy+3;y<=cy+8;y++){put(cx-1,y,T.ZR,1,1);put(cx+1,y,T.ZR,1,1)}
   put(cx-4,cy+4,T.PL,0,0);put(cx-6,cy+4,T.PU,0,0);
-  S.tax=14;S.tut=-1;
+  S.tax=14;S.tx={c:14,i:14};S.tut=-1;
 }
 var SCN=[
   {id:"free",n:"Partie libre",d:"Pas d'objectif, tu construis comme tu veux.",kind:null,funds:null,days:0},
@@ -1412,6 +1549,7 @@ function tick(){
   S.peak=Math.max(S.peak||0,ST.P);
   if(S.day%10===0){checkTier();checkAch()}
   if(S.day%30===0){
+    if(typeof fbMonthly==="function")fbMonthly();
     S.fx=(S.fx||[]).filter(function(e){return e.end>S.day});
     var mg=autoMerge();if(mg)recompute();
     var net=ST.inc-ST.exp,nk=0;S.funds+=net;
@@ -1832,7 +1970,7 @@ function gain(n){S.funds+=n}
     C("Faire des promesses",4000,"Tu paies la campagne : revenus -5 % et humeur -3 pendant 3 mois.",function(){addFx("sanction",3);toast("Promesses coûteuses")}),
     C("Accepter la défaite",0,"Revenus -5 % et humeur -3 pendant 6 mois.",function(){addFx("sanction",6);toast("La défaite pèse sur la ville")})]});
   /* 2. Technova */
-  S_({id:"tech1",start:1,t:"Une multinationale s'intéresse à la ville",x:"Technova envisage d'installer son siège chez vous, si les conditions sont bonnes.",ok:function(){return ST.P>=500},ch:[
+  S_({id:"tech1",start:1,t:"Une multinationale s'intéresse à la ville",x:"Technova envisage d'installer son siège chez toi, si les conditions sont bonnes.",ok:function(){return ST.P>=500},ch:[
     C("Offrir des avantages fiscaux",0,"Revenus -4 % pendant 12 mois, mais Technova s'installe.",function(){addFx("techtax",12);toast("Avantages accordés");nx("tech2a",3)}),
     C("Rester prudent",0,"Tu ne prends aucun risque, mais l'occasion peut filer.",function(){toast("Tu temporises");nx("tech2b",4)})]});
   S_({id:"tech2a",t:"Technova ouvre son siège",x:"Le siège ouvre ses portes et promet des milliers d'emplois.",ok:function(){return true},ch:[
@@ -1887,7 +2025,7 @@ function gain(n){S.funds+=n}
   S_({id:"grn3",t:"Journée sans voiture",x:"Le collectif propose une journée sans voiture en centre-ville.",ok:function(){return true},ch:[
     C("L'organiser",1000,"Humeur +6 pendant 6 mois.",function(){addFx("green",6);toast("Journée réussie");nx("grn4",4)}),
     C("Annuler",0,"Rien ne change.",function(){toast("Journée annulée")})]});
-  S_({id:"grn4",t:"Label ville verte",x:"Votre politique verte vous vaut d'être candidat à un label national.",ok:function(){return true},ch:[
+  S_({id:"grn4",t:"Label ville verte",x:"Ta politique verte te vaut d'être candidat à un label national.",ok:function(){return true},ch:[
     C("Candidater",1500,"Tu reçois 6 000 € et l'humeur monte de 5 pendant 6 mois.",function(){gain(6000);addFx("prix",6);toast("Label obtenu : 6 000 €")}),
     C("Passer",0,"Rien ne change.",function(){toast("Tu renonces au label")})]});
   /* 7. Festival de rue */
@@ -1959,17 +2097,17 @@ function K(l,cost,o){
   S_({id:"br2a",t:"Le chantier est terminé",x:"Le pont rouvre, flambant neuf.",ok:yes,ch:[K("Inaugurer en grande pompe",1000,{fx:[["trust",4]],t:"Inauguration réussie"}),K("Rouvrir sobrement",0,{fx:[["calm",3]],t:"Réouverture discrète"})]});
   S_({id:"br2b",t:"Les fissures reviennent",x:"Le renforcement n'a pas tenu et de nouvelles fissures apparaissent.",ok:yes,ch:[K("Tout refaire",5000,{fx:[["trust",3]],t:"Pont reconstruit"}),K("Colmater encore",1000,{next:["br3",3],t:"Nouveau rafistolage"})]});
   S_({id:"br2c",t:"Un camion s'effondre",x:"Une partie du pont cède sous le poids d'un camion, sans victime grave.",ok:yes,ch:[K("Indemniser les victimes",6000,{fx:[["trust",3]],t:"Les victimes sont indemnisées"}),K("Nier toute faute",0,{fx:[["scand",3]],next:["br3",3],t:"La ville nie sa responsabilité"})]});
-  S_({id:"br3",t:"Commission d'enquête",x:"Le conseil exige une enquête sur l'état de vos ponts.",ok:yes,ch:[K("Coopérer",2000,{fx:[["scandm",2]],t:"L'enquête se déroule dans la transparence"}),K("Bloquer l'enquête",0,{fx:[["scand",4]],t:"Le blocage fait scandale"})]});
+  S_({id:"br3",t:"Commission d'enquête",x:"Le conseil exige une enquête sur l'état de tes ponts.",ok:yes,ch:[K("Coopérer",2000,{fx:[["scandm",2]],t:"L'enquête se déroule dans la transparence"}),K("Bloquer l'enquête",0,{fx:[["scand",4]],t:"Le blocage fait scandale"})]});
   /* 2. Crue annoncée */
   S_({id:"fl1",start:1,t:"Crue annoncée",x:"Les prévisions annoncent une forte montée des eaux dans les prochains jours.",ok:function(){return ST.P>=300&&cntB(T.PU)+cntB(T.BCH)+cntB(T.MAR)>0},ch:[
-    K("Évacuer et sécuriser",3000,{next:["fl2a",2],t:"Quartiers évacués"}),K("Faire confiance aux digues",0,{next:["fl2b",1],t:"Vous attendez"})]});
+    K("Évacuer et sécuriser",3000,{next:["fl2a",2],t:"Quartiers évacués"}),K("Faire confiance aux digues",0,{next:["fl2b",1],t:"Tu attends"})]});
   S_({id:"fl2a",t:"Les eaux se retirent",x:"La crue est passée sans victime. Les commerçants demandent un geste.",ok:yes,ch:[K("Indemniser les commerçants",2000,{fx:[["trust",4]],t:"Commerçants indemnisés"}),K("Ne rien verser",0,{fx:[["anger",2]],t:"Les commerçants sont déçus"})]});
   S_({id:"fl2b",t:"L'eau monte",x:"Les digues sont mises à l'épreuve.",ok:yes,ch:[K("Prier pour qu'elles tiennent",0,{rnd:{p:.5,a:{fx:[["relief",3]],t:"Les digues tiennent, ouf"},b:{fx:[["anger",4],["slump",3]],t:"Les digues cèdent : dégâts et colère"}}})]});
   /* 3. Métro */
   S_({id:"me1",start:1,t:"Projet de métro souterrain",x:"Des urbanistes proposent un grand métro souterrain.",ok:function(){return ST.P>=800},ch:[
     K("Lancer le chantier",6000,{fx:[["slump",6]],next:["me2a",6],t:"Chantier lancé"}),K("Organiser une consultation",800,{next:["me2b",3],t:"Consultation ouverte"}),K("Reporter le projet",0,{t:"Projet repoussé"})]});
   S_({id:"me2a",t:"Le chantier dérape",x:"Le budget explose et les travaux prennent du retard.",ok:yes,ch:[K("Rallonge budgétaire",5000,{next:["me3",4],t:"Rallonge accordée"}),K("Stopper les travaux",0,{fx:[["anger",3]],t:"Chantier arrêté, les habitants râlent"})]});
-  S_({id:"me2b",t:"Résultat de la consultation",x:"Une courte majorité se dégage pour le projet.",ok:yes,ch:[K("Suivre l'avis",0,{fx:[["trust",3]],next:["me3",4],t:"Vous suivez l'avis des habitants"}),K("Passer outre",0,{fx:[["anger",4]],next:["me3",3],t:"Vous passez outre"})]});
+  S_({id:"me2b",t:"Résultat de la consultation",x:"Une courte majorité se dégage pour le projet.",ok:yes,ch:[K("Suivre l'avis",0,{fx:[["trust",3]],next:["me3",4],t:"Tu suis l'avis des habitants"}),K("Passer outre",0,{fx:[["anger",4]],next:["me3",3],t:"Tu passes outre"})]});
   S_({id:"me3",t:"Inauguration du métro",x:"La première ligne est prête.",ok:yes,ch:[K("Fête populaire",2000,{fx:[["tour2",6]],t:"Fête réussie"}),K("Discours sobre",0,{fx:[["trust",3]],t:"Inauguration sobre"})]});
   /* 4. Cambriolages */
   S_({id:"cr1",start:1,t:"Cambriolages en série",x:"Des commerces sont cambriolés plusieurs nuits de suite.",ok:function(){return ST.P>=300},ch:[
@@ -1979,19 +2117,19 @@ function K(l,cost,o){
   S_({id:"cr2c",t:"Les commerçants menacent de fermer",x:"Plusieurs commerçants parlent de quitter la ville.",ok:yes,ch:[K("Prime de sécurité",4000,{fx:[["calm",4]],t:"Prime versée"}),K("Les ignorer",0,{fx:[["slump",4],["anger",4]],t:"Des boutiques ferment"})]});
   /* 5. Start-up */
   S_({id:"st1",start:1,t:"Une start-up locale décolle",x:"Une jeune entreprise de la ville attire des investisseurs.",ok:function(){return ST.P>=600},ch:[
-    K("Investir dans l'entreprise",5000,{next:["st2a",4],t:"Vous devenez actionnaire"}),K("Laisser faire",0,{next:["st2b",6],t:"Vous laissez la start-up se débrouiller"})]});
-  S_({id:"st2a",t:"La start-up lève des fonds",x:"Elle valorise votre part et demande votre avis.",ok:yes,ch:[K("Réinvestir",3000,{next:["st3",4],t:"Vous réinvestissez"}),K("Encaisser les bénéfices",0,{gain:9000,t:"Bénéfices encaissés"})]});
+    K("Investir dans l'entreprise",5000,{next:["st2a",4],t:"Tu deviens actionnaire"}),K("Laisser faire",0,{next:["st2b",6],t:"Tu laisses la start-up se débrouiller"})]});
+  S_({id:"st2a",t:"La start-up lève des fonds",x:"Elle valorise ta part et demande ton avis.",ok:yes,ch:[K("Réinvestir",3000,{next:["st3",4],t:"Tu réinvestis"}),K("Encaisser les bénéfices",0,{gain:9000,t:"Bénéfices encaissés"})]});
   S_({id:"st2b",t:"La start-up veut partir",x:"Faute de soutien, elle envisage de s'installer à l'étranger.",ok:yes,ch:[K("La retenir par des aides",4000,{fx:[["jobs",12]],t:"La start-up reste"}),K("La laisser partir",0,{fx:[["slump",3]],t:"La start-up part"})]});
-  S_({id:"st3",t:"Introduction en bourse",x:"La start-up entre en bourse avec un grand succès.",ok:yes,ch:[K("Garder une part",0,{gain:6000,fx:[["boom2",12]],t:"Vous gardez une part"}),K("Tout vendre",0,{gain:14000,t:"Vente totale"})]});
+  S_({id:"st3",t:"Introduction en bourse",x:"La start-up entre en bourse avec un grand succès.",ok:yes,ch:[K("Garder une part",0,{gain:6000,fx:[["boom2",12]],t:"Tu gardes une part"}),K("Tout vendre",0,{gain:14000,t:"Vente totale"})]});
   /* 6. Sécheresse */
   S_({id:"dr1",start:1,t:"Sécheresse",x:"Les réserves d'eau sont au plus bas.",ok:function(){return ST.P>=300&&seasonIdx()===2},ch:[
-    K("Restreindre l'usage de l'eau",0,{fx:[["anger",2]],next:["dr2a",2],t:"Restrictions annoncées"}),K("Faire venir des camions-citernes",3000,{next:["dr2b",3],t:"Camions-citernes en route"}),K("Attendre la pluie",0,{next:["dr2c",2],t:"Vous attendez la pluie"})]});
+    K("Restreindre l'usage de l'eau",0,{fx:[["anger",2]],next:["dr2a",2],t:"Restrictions annoncées"}),K("Faire venir des camions-citernes",3000,{next:["dr2b",3],t:"Camions-citernes en route"}),K("Attendre la pluie",0,{next:["dr2c",2],t:"Tu attends la pluie"})]});
   S_({id:"dr2a",t:"Les restrictions durent",x:"Les habitants s'impatientent.",ok:yes,ch:[K("Lever les restrictions",0,{fx:[["slump",2]],t:"Restrictions levées"}),K("Les maintenir",0,{fx:[["anger",2]],t:"Restrictions maintenues"})]});
   S_({id:"dr2b",t:"Les nappes se rechargent",x:"Les camions ont tenu jusqu'aux premières pluies.",ok:yes,ch:[K("Construire des réservoirs",5000,{fx:[["relief",12]],t:"Réservoirs construits"}),K("En rester là",0,{t:"Rien de plus"})]});
   S_({id:"dr2c",t:"Incendies de forêt",x:"La végétation sèche s'enflamme aux abords de la ville.",ok:yes,ch:[K("Appeler les pompiers voisins",3000,{fx:[["relief",3]],t:"Les pompiers voisins maîtrisent les feux"}),K("Laisser brûler",0,{fx:[["anger",3],["slump",2]],t:"Les feux causent des dégâts"})]});
   /* 7. Football */
   S_({id:"fb1",start:1,t:"Un club de football veut s'installer",x:"Un club pro cherche une ville d'accueil.",ok:function(){return ST.P>=500&&ST.leisure>=2},ch:[
-    K("Construire un petit stade",4000,{next:["fb2a",4],t:"Le club s'installe"}),K("Lui louer un terrain existant",1000,{next:["fb2b",3],t:"Le club joue dans vos installations"}),K("Refuser",0,{t:"Le club va ailleurs"})]});
+    K("Construire un petit stade",4000,{next:["fb2a",4],t:"Le club s'installe"}),K("Lui louer un terrain existant",1000,{next:["fb2b",3],t:"Le club joue dans tes installations"}),K("Refuser",0,{t:"Le club va ailleurs"})]});
   S_({id:"fb2a",t:"Une saison réussie",x:"Le club monte en division supérieure.",ok:yes,ch:[K("Prolonger le partenariat",3000,{fx:[["tour2",12]],t:"Partenariat prolongé"}),K("Vendre le club",0,{gain:8000,t:"Club vendu"})]});
   S_({id:"fb2b",t:"Supporters bruyants",x:"Les soirs de match, le quartier est agité.",ok:yes,ch:[K("Créer une zone tampon",1500,{fx:[["calm",4]],t:"Zone tampon créée"}),K("Ignorer",0,{fx:[["anger",3]],t:"Les riverains protestent"})]});
   /* 8. Usine */
@@ -2008,22 +2146,22 @@ function K(l,cost,o){
   S_({id:"cy2c",t:"Fuite de données",x:"Des données d'habitants circulent en ligne.",ok:yes,ch:[K("Présenter des excuses",1500,{fx:[["scandm",3]],t:"Excuses publiques"}),K("Nier",0,{fx:[["scand",4]],t:"Le déni fait scandale"})]});
   /* 10. Jumelage */
   S_({id:"ju1",start:1,t:"Proposition de jumelage",x:"Une ville étrangère propose un jumelage.",ok:function(){return ST.P>=500},ch:[
-    K("Accepter et organiser une délégation",2500,{next:["ju2",3],t:"Jumelage accepté"}),K("Décliner poliment",0,{t:"Vous déclinez"})]});
-  S_({id:"ju2",t:"Voyage officiel",x:"Il est temps d'envoyer une délégation chez votre ville jumelle.",ok:yes,ch:[K("Grande délégation",3000,{next:["ju3",3],t:"Grande délégation envoyée"}),K("Délégation réduite",1000,{next:["ju3",3],t:"Délégation réduite envoyée"})]});
-  S_({id:"ju3",t:"Accords de coopération",x:"Votre ville jumelle propose de signer un accord.",ok:yes,ch:[K("Accord touristique",0,{fx:[["tour2",12]],t:"Accord touristique signé"}),K("Accord commercial",0,{gain:6000,t:"Accord commercial signé"})]});
+    K("Accepter et organiser une délégation",2500,{next:["ju2",3],t:"Jumelage accepté"}),K("Décliner poliment",0,{t:"Tu déclines"})]});
+  S_({id:"ju2",t:"Voyage officiel",x:"Il est temps d'envoyer une délégation chez ta ville jumelle.",ok:yes,ch:[K("Grande délégation",3000,{next:["ju3",3],t:"Grande délégation envoyée"}),K("Délégation réduite",1000,{next:["ju3",3],t:"Délégation réduite envoyée"})]});
+  S_({id:"ju3",t:"Accords de coopération",x:"Ta ville jumelle propose de signer un accord.",ok:yes,ch:[K("Accord touristique",0,{fx:[["tour2",12]],t:"Accord touristique signé"}),K("Accord commercial",0,{gain:6000,t:"Accord commercial signé"})]});
   /* 11. Monstre du lac */
   S_({id:"my1",start:1,t:"Une créature aperçue au bord de l'eau",x:"Des habitants affirment avoir vu une créature étrange près de l'eau.",ok:function(){return ST.P>=300},ch:[
-    K("Lancer une enquête",2000,{next:["my2a",3],t:"Enquête lancée"}),K("Faire de la publicité",500,{next:["my2b",2],t:"Campagne lancée"}),K("Démentir",0,{fx:[["tourlow",3]],next:["my2c",3],t:"Vous démentez"})]});
+    K("Lancer une enquête",2000,{next:["my2a",3],t:"Enquête lancée"}),K("Faire de la publicité",500,{next:["my2b",2],t:"Campagne lancée"}),K("Démentir",0,{fx:[["tourlow",3]],next:["my2c",3],t:"Tu démens"})]});
   S_({id:"my2a",t:"Rien trouvé, mais un mystère s'installe",x:"L'enquête n'a rien prouvé, mais la curiosité grandit.",ok:yes,ch:[K("Ouvrir une exposition",1500,{fx:[["tour2",6]],t:"Exposition ouverte"}),K("Clore l'affaire",0,{t:"Affaire close"})]});
-  S_({id:"my2b",t:"Les touristes affluent",x:"La rumeur attire des curieux de tout le pays.",ok:yes,ch:[K("Organiser des croisières",2000,{fx:[["tour2",12]],t:"Croisières lancées"}),K("Rester discret",0,{fx:[["tour2",3]],t:"Vous restez discret"})]});
-  S_({id:"my2c",t:"Les curieux se vexent",x:"Votre démenti a été mal pris. Des journalistes enquêtent.",ok:yes,ch:[K("Inviter la presse",800,{fx:[["scandm",1]],t:"La presse est invitée"}),K("Ne rien dire",0,{fx:[["tourlow",3]],t:"Silence radio"})]});
+  S_({id:"my2b",t:"Les touristes affluent",x:"La rumeur attire des curieux de tout le pays.",ok:yes,ch:[K("Organiser des croisières",2000,{fx:[["tour2",12]],t:"Croisières lancées"}),K("Rester discret",0,{fx:[["tour2",3]],t:"Tu restes discret"})]});
+  S_({id:"my2c",t:"Les curieux se vexent",x:"Ton démenti a été mal pris. Des journalistes enquêtent.",ok:yes,ch:[K("Inviter la presse",800,{fx:[["scandm",1]],t:"La presse est invitée"}),K("Ne rien dire",0,{fx:[["tourlow",3]],t:"Silence radio"})]});
   /* 12. Élections */
-  S_({id:"el1",start:1,t:"Élections municipales",x:"Les élections approchent et vous devez choisir votre stratégie.",ok:function(){return ST.P>=1000},ch:[
-    K("Se représenter sur son bilan",0,{next:["el2a",2],t:"Candidature déposée"}),K("Annoncer des baisses d'impôts",0,{next:["el2b",2],t:"Promesse de baisse d'impôts"}),K("Ne pas se représenter",0,{fx:[["calm",6]],t:"Vous passez la main"})]});
-  S_({id:"el2a",t:"Débat télévisé",x:"Votre principal adversaire vous attaque.",ok:yes,ch:[K("Attaquer l'opposition",0,{fx:[["scandm",2]],next:["el3b",1],t:"Débat tendu"}),K("Présenter un projet",2000,{next:["el3a",1],t:"Débat constructif"})]});
+  S_({id:"el1",start:1,t:"Élections municipales",x:"Les élections approchent et tu dois choisir ta stratégie.",ok:function(){return ST.P>=1000},ch:[
+    K("Se représenter sur son bilan",0,{next:["el2a",2],t:"Candidature déposée"}),K("Annoncer des baisses d'impôts",0,{next:["el2b",2],t:"Promesse de baisse d'impôts"}),K("Ne pas se représenter",0,{fx:[["calm",6]],t:"Tu passes la main"})]});
+  S_({id:"el2a",t:"Débat télévisé",x:"Ton principal adversaire t'attaque.",ok:yes,ch:[K("Attaquer l'opposition",0,{fx:[["scandm",2]],next:["el3b",1],t:"Débat tendu"}),K("Présenter un projet",2000,{next:["el3a",1],t:"Débat constructif"})]});
   S_({id:"el2b",t:"Promesses coûteuses",x:"La baisse d'impôts promise va coûter cher.",ok:yes,ch:[K("Tenir la promesse",0,{fx:[["tax",6]],next:["el3a",1],t:"Impôts en baisse"}),K("Reculer",0,{fx:[["anger",3]],next:["el3b",1],t:"Promesse abandonnée"})]});
-  S_({id:"el3a",t:"Réélection",x:"Vous êtes réélu.",ok:yes,ch:[K("Fêter la victoire",2000,{gain:4000,fx:[["trust",8]],t:"Victoire fêtée"})]});
-  S_({id:"el3b",t:"Second tour défavorable",x:"Le scrutin est serré et vous êtes en difficulté.",ok:yes,ch:[K("Passer une alliance",3000,{fx:[["calm",4]],t:"Alliance conclue"}),K("Perdre dignement",0,{fx:[["sanction",4]],t:"Défaite acceptée"})]});
+  S_({id:"el3a",t:"Réélection",x:"Tu es réélu.",ok:yes,ch:[K("Fêter la victoire",2000,{gain:4000,fx:[["trust",8]],t:"Victoire fêtée"})]});
+  S_({id:"el3b",t:"Second tour défavorable",x:"Le scrutin est serré et tu es en difficulté.",ok:yes,ch:[K("Passer une alliance",3000,{fx:[["calm",4]],t:"Alliance conclue"}),K("Perdre dignement",0,{fx:[["sanction",4]],t:"Défaite acceptée"})]});
 })();
 
 /* ---------- interface ---------- */
@@ -2048,7 +2186,7 @@ function syncUI(){
   var sp=$("spd");sp.textContent=["II","x1","x2","x3"][S.speed]||"II";sp.setAttribute("aria-label","Vitesse du jeu : "+["pause","x1","x2","x3"][S.speed]+". Toucher pour changer");
   setBar("dR",ST.dR,"var(--zr)");setBar("dC",ST.dC,"var(--zc)");setBar("dI",ST.dI,"var(--zi)");
   var b,i;
-  $("tax").value=S.tax;$("taxv").textContent=S.tax;$("dis").checked=S.dis;
+  $("tax").value=S.tax;$("taxv").textContent=S.tax;if(typeof budSync==="function")budSync();$("dis").checked=S.dis;
   $("bInc").textContent=eur(ST.inc);$("bExp").textContent=eur(ST.exp);if($("bSoc"))$("bSoc").textContent=eur(Math.round(ST.social*DIFF[S.diff===undefined?1:S.diff].maint));
   var net=ST.inc-ST.exp;$("bNet").textContent=(net>=0?"+":"")+eur(net);
   $("bTour").textContent=eur(ST.tour);
@@ -2109,7 +2247,7 @@ BIDS.map(function(k){return BIG2[k]?k+"2":k}).forEach(function(k){TOOLS.push({id
 TOOLS.push({id:"bulldoze",label:"Raser",cost:COST.bulldoze,icon:SPR.icoBull,hint:"Raser : efface routes, ponts, zones et bâtiments."});
 var CATS=[["base","Zones","Zones"],["net","Réseaux","Réseau"],["srv","Services","Servic."],["fun","Loisirs","Loisirs"],["trn","Transports","Transp."],["eco","Économie","Écon."]];
 var CATICO=(function(){
-  function ic(f){return mk(16,f)}
+  function ic(f){return mk(16,function(g){f(g);var d="#1a2233";px(g,d,1,0,14,1);px(g,d,1,15,14,1);px(g,d,0,1,1,14);px(g,d,15,1,1,14);g.clearRect(0,0,1,1);g.clearRect(15,0,1,1);g.clearRect(0,15,1,1);g.clearRect(15,15,1,1)})}
   return {
     base:ic(function(g){px(g,"#3f9a44",1,1,6,6);px(g,"#3b82d6",9,1,6,6);px(g,"#d9a91f",1,9,6,6);px(g,"#8a96ad",9,9,6,6)}),
     net:ic(function(g){px(g,"#e8eef7",0,0,16,16);px(g,"#e8a010",4,1,3,2);px(g,"#e8a010",3,3,3,2);px(g,"#e8a010",1,5,6,2);px(g,"#e8a010",3,7,3,2);px(g,"#e8a010",2,9,2,3);px(g,"#2f88c8",11,2,2,2);px(g,"#2f88c8",10,4,4,2);px(g,"#2f88c8",9,6,6,4);px(g,"#2f88c8",10,10,4,2);px(g,"#2f88c8",11,12,2,1)}),
@@ -2187,6 +2325,7 @@ function setTool(id){
   if(S)draw();
 }
 function overlayColor(i,t){
+  if(CB){var cbr=cbOverlay(i,t);if(cbr!==undefined)return cbr}
   switch(ovMode){
     case 1:return cover[i]?"rgba(255,214,60,.30)":null;
     case 2:return wcover[i]?"rgba(60,140,255,.32)":null;
@@ -2201,7 +2340,7 @@ function overlayColor(i,t){
     case 11:return noiseA[i]>4?"rgba(255,"+Math.round(190-noiseA[i]*1.4)+",30,"+Math.min(.7,.12+noiseA[i]/120)+")":null;
     case 12:if(t<T.ZR||t>T.ZI||S.lvl[i]===0)return null;var hp=Math.max(0,Math.min(100,100-crime[i]*.8-poll[i]/2.55*.6-noiseA[i]*.4+amen[i]*.6+(hcover[i]?8:0)+(ecover[i]?6:0)-20))/100;return "rgba("+Math.round(230-190*hp)+","+Math.round(60+150*hp)+",70,.6)";
     case 13:if(t<T.ZR||t>T.ZI||S.lvl[i]===0)return null;var dn=Math.min(1,popOf(t,S.lvl[i],S.dens[i],S.big[i])/120);return "rgba(40,90,230,"+(.15+.6*dn).toFixed(2)+")";
-    case 14:if(t>=T.ZR&&t<=T.ZI&&S.lvl[i]>0){var ic=popOf(t,S.lvl[i],S.dens[i],S.big[i])*(.6+lv[i]/125)*(t===T.ZR?1:.8)*S.tax*.08;return "rgba(230,190,20,"+(.12+.6*Math.min(1,ic/60)).toFixed(2)+")"}
+    case 14:if(t>=T.ZR&&t<=T.ZI&&S.lvl[i]>0){var ic=popOf(t,S.lvl[i],S.dens[i],S.big[i])*(.6+lv[i]/125)*(t===T.ZR?1:.8)*(t===T.ZR?S.tax:t===T.ZC?S.tx.c:S.tx.i)*.08;return "rgba(230,190,20,"+(.12+.6*Math.min(1,ic/60)).toFixed(2)+")"}
       if(TYPEBLD[t]&&(BLD[TYPEBLD[t]].gain||BLD[TYPEBLD[t]].tour||BLD[TYPEBLD[t]].trade))return "rgba(255,210,40,.7)";return null;
   }
   return null;
@@ -2414,11 +2553,9 @@ function paint(){
     if(ts<8){ctx.fillStyle=colorFor(i);ctx.fillRect(dx,dy,dw,dh)}else ctx.drawImage(spriteFor(x,y,i),dx,dy,dw,dh);
     if(ts>=6&&!ovMode){var stn=seasonTint(i,t);if(stn){ctx.fillStyle=stn;ctx.fillRect(dx,dy,dw,dh)}}
     if(ovMode){var oc=overlayColor(i,t);if(oc){ctx.fillStyle=oc;ctx.fillRect(dx,dy,dw,dh)}}
+    if(CB&&ts>=10&&t>=T.ZR&&t<=T.ZI&&!S.big[i])zoneLetter(dx,dy,dw,dh,t);
     if(ts>=12&&t>=T.ZR&&t<=T.ZI&&!S.big[i]){
-      if(!roadAdj[i])ctx.drawImage(SPR.noRoad,dx+dw/2,dy,dw/2,dh/2);
-      else if(!(cover[i]&&ST.powerOK))ctx.drawImage(SPR.noPower,dx+dw/2,dy,dw/2,dh/2);
-      else if(!(wcover[i]&&ST.waterOK))ctx.drawImage(SPR.noWater,dx+dw/2,dy,dw/2,dh/2);
-      else if(S.lvl[i]>0&&S.lvl[i]<maxLvl(t,S.dens[i])&&!gateOk(t,S.dens[i],S.lvl[i],i))ctx.drawImage(SPR.noServ,dx+dw/2,dy,dw/2,dh/2);
+      var al=alertOf(i,t);if(al)ctx.drawImage(SPR[al.s]||SPR.noServ,dx+dw/2,dy,dw/2,dh/2);
     }
     if(ts>=12&&t===T.WT&&!twOn[i])ctx.drawImage(SPR.noWater,dx+dw/2,dy,dw/2,dh/2);
     if(ts>=12&&NEEDROAD[t]&&!roadAdj[i]&&!isSub(i))ctx.drawImage(SPR.noRoad,dx+dw/2,dy,dw/2,dh/2);
@@ -2467,6 +2604,7 @@ function paint(){
   drawAmbiance(ts,w,h,x0,y0,x1,y1);
   if(ANIM)drawAnim(ts,w,h,x0,y0,x1,y1);
   ctx.setTransform(dpr,0,0,dpr,0,0);
+  if(typeof nbTags==="function")nbTags(w,h);
 }
 
 /* ---------- avis des habitants ---------- */
@@ -2613,6 +2751,7 @@ function checkPlace(x,y){
   return "";
 }
 function applyTool(x,y){
+  if(visiting)return false;
   if(x<0||y<0||x>=W||y>=H)return false;
   if(tool==="pan")return false;
   if(!ownedAt(x,y)){warn("Parcelle non achetée : touche-la pour l'acheter");return false}
@@ -2691,6 +2830,7 @@ function confirmPlace(){
 }
 function tap(p){
   var t=tileAt(p.x,p.y);if(t.x<0||t.y<0||t.x>=W||t.y>=H)return;
+  if(visiting){if(ownedAt(t.x,t.y))showInfo(t);return}
   if(!ownedAt(t.x,t.y)){showParcel(t);return}
   if(tool==="pan"){showInfo(t);return}
   if(SINGLE[tool]){setPending(t);return}
@@ -2828,8 +2968,27 @@ function showInfo(t){
   var ic=$("infoIco").getContext("2d");ic.imageSmoothingEnabled=false;ic.clearRect(0,0,16,16);ic.drawImage(ICOOF[k]||spriteFor(t.x,t.y,i),0,0,16,16);
   $("infoTitle").textContent=title;
   fillTbl(rows);
+  var al=[];
+  if(fire[i])al.push({s:"flame",w:"Incendie en cours",f:"Une caserne à proximité l'éteint beaucoup plus vite."});
+  if(k>=T.ZR&&k<=T.ZI){var z=alertOf(i,k);if(z)al.push(z)}
+  else{
+    if(NEEDROAD[k]&&!roadAdj[i]&&!isSub(i))al.push({s:"noRoad",w:"Route voisine requise",f:"Pose une route le long de ce bâtiment."});
+    if(k===T.WT&&!twOn[i])al.push({s:"noWater",w:"Château d'eau hors réseau",f:"Une pompe ou un autre château d'eau doit couvrir cette case."});
+  }
+  fillAlert(al);
   $("infoTip").textContent=tips.join(" ");
   $("infoShade").hidden=false;draw();
+}
+function fillAlert(a){
+  var box=$("infoAlert");box.textContent="";
+  if(!a.length){box.hidden=true;return}
+  a.forEach(function(x){
+    var r=document.createElement("div"),c=document.createElement("canvas"),src=x.s==="flame"?SPR.flame[0]:(SPR[x.s]||SPR.noServ),tx=document.createElement("div"),b=document.createElement("b"),sm=document.createElement("small");
+    r.className="infoal";c.width=src.width;c.height=src.height;c.getContext("2d").drawImage(src,0,0);c.style.cssText="width:36px;height:36px;image-rendering:pixelated;flex:none";
+    b.textContent="Alerte : "+x.w;b.style.display="block";sm.textContent=x.f||"";sm.style.display="block";
+    tx.appendChild(b);tx.appendChild(sm);r.appendChild(c);r.appendChild(tx);box.appendChild(r);
+  });
+  box.hidden=false;
 }
 function fillTbl(rows){
   var tb=$("infoTbl");tb.textContent="";
@@ -2845,18 +3004,20 @@ function showParcel(t){
   rows.push(["Eau",Math.round(w/(PS*PS)*100)+" %",""]);
   rows.push(["Arbres",Math.round(tr/(PS*PS)*100)+" %",""]);
   rows.push(["Taille",PS+" sur "+PS+" cases",""]);
-  rows.push(["Vos fonds",eur(S.funds),""]);
+  rows.push(["Tes fonds",eur(S.funds),""]);
   if(!adj)tips.push("Achète d'abord une parcelle qui touche ta ville.");
   else if(S.funds<price)tips.push("Il te manque "+eur(price-S.funds)+".");
   else tips.push("Le terrain est livré tel quel, avec ses arbres et son eau.");
   var ic=$("infoIco").getContext("2d");ic.imageSmoothingEnabled=false;ic.clearRect(0,0,16,16);ic.drawImage(SPR.coin,4,4);
   $("infoTitle").textContent="Parcelle à vendre";
+  fillAlert([]);
   fillTbl(rows);
   $("infoTip").textContent=tips.join(" ");
   buyP=pi;$("buyBtn").hidden=!adj;$("buyBtn").textContent="Acheter pour "+eur(price);
   $("infoShade").hidden=false;
 }
 function buyParcel(){
+  if(visiting)return;
   if(buyP<0||!buyable(buyP))return;
   var price=parcelPrice();if(S.funds<price){toast("Fonds insuffisants");return}
   S.funds-=price;S.own[buyP]=1;touched=true;buyP=-1;
@@ -2865,27 +3026,32 @@ function buyParcel(){
 function closeInfo(){$("infoShade").hidden=true;selTile=null;draw()}
 
 /* ---------- villes voisines (échange de codes) ---------- */
+var LIVE={cards:{},list:[],ok:false,err:""};
 function rid(){var s="",c="abcdefghijkmnpqrstuvwxyz23456789",i;for(i=0;i<10;i++)s+=c[Math.floor(Math.random()*c.length)];return s}
-function nbk(){if(!S.nbk)S.nbk={cid:rid(),deals:[],road:[],done:[],sent:{m:-1,n:0},cards:{}};if(!S.nbk.cid)S.nbk.cid=rid();return S.nbk}
+function nbk(){if(!S.nbk)S.nbk={cid:rid(),uid:"",pub:false,ref:[],side:{},deals:[],road:[],done:[],sent:{m:-1,n:0},cards:{}};if(!S.nbk.cid)S.nbk.cid=rid();return S.nbk}
 function sanCard(c){
   if(!c||typeof c!=="object")return null;
   function ids(a,mx){return Array.isArray(a)?a.filter(function(v){return typeof v==="string"&&v.length>0&&v.length<40}).slice(0,mx):[]}
   return {name:String(c.name||"Ville").slice(0,24),pop:Math.max(0,Math.min(1e7,Math.round(+c.pop||0))),tier:String(c.tier||"").slice(0,20),th:(typeof c.th==="string"&&/^[0-7]*$/.test(c.th))?c.th.slice(0,576):"",deals:ids(c.deals,3),road:ids(c.road,3),ts:+c.ts||0};
 }
 function sanNbk(o){
-  var k={cid:"",deals:[],road:[],done:[],sent:{m:-1,n:0},cards:{}},i,n=0,id;
+  var k={cid:"",uid:"",pub:false,ref:[],side:{},deals:[],road:[],done:[],sent:{m:-1,n:0},cards:{}},i,n=0,id;
   if(!o||typeof o!=="object")return k;
   function ids(a,mx){return Array.isArray(a)?a.filter(function(v){return typeof v==="string"&&v.length>0&&v.length<40}).slice(0,mx):[]}
   k.cid=typeof o.cid==="string"&&o.cid.length<40?o.cid:"";
+  k.uid=typeof o.uid==="string"&&o.uid.length<40?o.uid:"";k.pub=o.pub===true;
+  if(Array.isArray(o.ref))k.ref=o.ref.filter(function(v){return typeof v==="string"&&v.length<60}).slice(0,30);
+  if(o.side&&typeof o.side==="object"){var q=0,sid;for(sid in o.side){if(q>=30)break;if(sid.length<40&&/^[gdhb]$/.test(String(o.side[sid]))){k.side[sid]=o.side[sid];q++}}}
   k.deals=ids(o.deals,3);k.road=ids(o.road,3);k.done=ids(o.done,80);
   if(o.sent&&isFinite(o.sent.m)&&isFinite(o.sent.n))k.sent={m:+o.sent.m,n:Math.max(0,+o.sent.n)};
   if(o.cards&&typeof o.cards==="object")for(id in o.cards){if(n>=12)break;if(id.length>=40)continue;var c=sanCard(o.cards[id]);if(c){k.cards[id]=c;n++}}
   return k;
 }
 function nbActive(){
-  var k=nbk(),l=0,d=0,i,c;
-  for(i=0;i<k.road.length;i++){c=k.cards[k.road[i]];if(c&&c.road.indexOf(k.cid)>=0)l++}
-  for(i=0;i<k.deals.length;i++){c=k.cards[k.deals[i]];if(c&&c.deals.indexOf(k.cid)>=0)d++}
+  var k=nbk(),l=0,d=0,i,c,me=k.uid||"";
+  function has(a,x){return a.indexOf(k.cid)>=0||(me&&a.indexOf(me)>=0)}
+  for(i=0;i<k.road.length;i++){c=k.cards[k.road[i]]||LIVE.cards[k.road[i]];if(c&&has(c.road))l++}
+  for(i=0;i<k.deals.length;i++){c=k.cards[k.deals[i]]||LIVE.cards[k.deals[i]];if(c&&has(c.deals))d++}
   return {l:Math.min(3,l),d:Math.min(3,d)};
 }
 var NBCOL=["#7cc05a","#4aa8e0","#2f7d32","#6f6f78","#c0503c","#3f6fb5","#c99a12","#f5c542"];
@@ -2983,12 +3149,610 @@ function renderNb(){
     row.appendChild(bt);row.appendChild(out);out.style.width="100%";box.appendChild(row);
   });
 }
+/* ---------- mode direct (Firebase) ---------- */
+var FBCFG={apiKey:"AIzaSyAkzsEgnQUNiiJngC_DTEp3CAdR03iZQqQ",authDomain:"ville-pixel.firebaseapp.com",projectId:"ville-pixel",storageBucket:"ville-pixel.firebasestorage.app",messagingSenderId:"1015658779017",appId:"1:1015658779017:web:8c83af8d6d1a8dc04a9158"};
+var fb=null,fbP=null,lastPub=0,aidUnsub=null,visStash=null,liveBusy=false;
+function fbInit(){
+  if(fb)return Promise.resolve(fb);
+  if(fbP)return fbP;
+  fbP=(async function(){
+    try{
+      var base="https://www.gstatic.com/firebasejs/10.12.2/";
+      var A=await import(base+"firebase-app.js"),Au=await import(base+"firebase-auth.js"),F=await import(base+"firebase-firestore.js");
+      var app=A.initializeApp(FBCFG),auth=Au.getAuth(app);
+      if(auth.authStateReady)await auth.authStateReady();
+      if(!auth.currentUser)await Au.signInAnonymously(auth);
+      fb={A:A,Au:Au,F:F,app:app,auth:auth,fs:F.getFirestore(app),uid:auth.currentUser.uid};
+      LIVE.ok=true;LIVE.err="";
+      return fb;
+    }catch(e){
+      LIVE.ok=false;LIVE.err=String((e&&(e.code||e.message))||e).slice(0,120);fbP=null;return null;
+    }
+  })();
+  return fbP;
+}
+function fbSanCity(id,o){
+  if(!o||typeof o!=="object")return null;
+  var c=sanCard(o);if(!c)return null;
+  c.uid=id;c.peak=Math.max(0,Math.min(1e7,Math.round(+o.peak||0)));return c;
+}
+async function fbPublish(force){
+  if(visiting||!S)return;
+  var k=nbk();if(!k.pub)return;
+  var now=Date.now();if(!force&&now-lastPub<120000)return;
+  var f=await fbInit();if(!f)return;
+  lastPub=now;k.uid=f.uid;
+  try{
+    var o=serialize();delete o.nbk;delete o.chain;delete o.sf;o.speed=0;o.tut=-1;
+    var card={name:String(S.name||"Ville").slice(0,24),pop:Math.round(ST.P),peak:Math.round(S.peak||0),tier:tierNow(),th:thumbCode(),deals:k.deals.slice(0,3),road:k.road.slice(0,3),ts:now};
+    await f.F.setDoc(f.F.doc(f.fs,"cities",f.uid),card);
+    await f.F.setDoc(f.F.doc(f.fs,"maps",f.uid),{name:card.name,json:JSON.stringify(o),ts:now});
+  }catch(e){LIVE.err=String((e&&(e.code||e.message))||e).slice(0,120)}
+}
+async function fbUnpublish(){
+  var k=nbk(),f=await fbInit();k.pub=false;
+  if(f){try{await f.F.deleteDoc(f.F.doc(f.fs,"cities",f.uid));await f.F.deleteDoc(f.F.doc(f.fs,"maps",f.uid))}catch(e){}}
+  scheduleSave(true);
+}
+async function fbRefresh(){
+  var f=await fbInit();if(!f)return false;
+  try{
+    var q=f.F.query(f.F.collection(f.fs,"cities"),f.F.orderBy("ts","desc"),f.F.limit(30)),snap=await f.F.getDocs(q),list=[],cards={},before=JSON.stringify(nbActive());
+    snap.forEach(function(d){
+      if(d.id===f.uid)return;
+      var c=fbSanCity(d.id,d.data());if(c){list.push(c);cards[d.id]=c}
+    });
+    LIVE.list=list;LIVE.cards=cards;LIVE.err="";
+    if(S&&!visiting&&JSON.stringify(nbActive())!==before){recompute();syncUI()}
+    return true;
+  }catch(e){LIVE.err=String((e&&(e.code||e.message))||e).slice(0,120);return false}
+}
+function fbMonthly(){
+  if(visiting||!S)return;var k=nbk();
+  if(k.pub||k.deals.length||k.road.length){fbPublish(false);fbRefresh()}
+}
+async function fbLiveStart(){
+  if(!S)return;var k=nbk();
+  if(!k.pub)return;
+  var f=await fbInit();if(!f)return;
+  k.uid=f.uid;fbPublish(true);fbRefresh();fbAidListen();
+}
+async function fbAidListen(){
+  if(aidUnsub)return;
+  var f=await fbInit();if(!f)return;
+  try{
+    var u1=f.F.onSnapshot(f.F.collection(f.fs,"aid",f.uid,"gifts"),function(snap){
+      if(visiting||!S)return;
+      var k=nbk();
+      snap.docChanges().forEach(function(ch){
+        if(ch.type!=="added")return;
+        var d=ch.doc,o=d.data(),a=Math.round(+o.amount),id=d.id;
+        var del=function(){f.F.deleteDoc(d.ref).catch(function(){})};
+        if(!isFinite(a)||a<=0||a>50000||k.done.indexOf(id)>=0){del();return}
+        k.done.push(id);if(k.done.length>80)k.done.shift();
+        receiveAid(String(o.fromName||"Une ville voisine").slice(0,24),a);
+        scheduleSave(true);del();
+      });
+    },function(e){aidUnsub=null});
+    var u2=f.F.onSnapshot(f.F.collection(f.fs,"inbox",f.uid,"msgs"),function(snap){
+      if(visiting||!S)return;
+      var k=nbk(),refresh=false;
+      snap.docChanges().forEach(function(ch){
+        if(ch.type!=="added")return;
+        var d=ch.doc,o=d.data(),kind=String(o.kind||""),del=function(){f.F.deleteDoc(d.ref).catch(function(){})};
+        if(!MSGK[kind]){del();return}
+        var nm=String(o.fromName||"Une ville voisine").slice(0,24);
+        if(kind==="deal"||kind==="road"){k.ref=k.ref.filter(function(r){return r!==o.from+":"+kind});refresh=true}
+        if(kind==="accept"||kind==="refuse")refresh=true;
+        nbPopup(MSGT[kind],nm+" "+MSGK[kind]+".",del);
+      });
+      if(refresh)fbRefresh().then(function(){nbBadge();if(!$("nbShade").hidden)renderNb()});
+    },function(e){});
+    aidUnsub=function(){try{u1()}catch(e){}try{u2()}catch(e){}};
+  }catch(e){aidUnsub=null}
+}
+var MSGK={thanks:"te remercie",help:"a besoin d'aide",welcome:"te souhaite la bienvenue",bravo:"te félicite",deal:"te propose un commerce",road:"te propose une liaison par route",accept:"a accepté ta proposition",refuse:"a refusé ta proposition"};
+var MSGT={thanks:"Message d'une ville voisine",help:"Message d'une ville voisine",welcome:"Message d'une ville voisine",bravo:"Message d'une ville voisine",deal:"Nouvelle proposition",road:"Nouvelle proposition",accept:"Proposition acceptée",refuse:"Proposition refusée"};
+var MSGB=[["thanks","Merci"],["help","Besoin d'aide"],["welcome","Bienvenue"],["bravo","Bravo"]];
+var msgCool={};
+async function fbMsg(toUid,kind){
+  var f=await fbInit();if(!f)return false;
+  try{await f.F.addDoc(f.F.collection(f.fs,"inbox",toUid,"msgs"),{from:f.uid,fromName:String(S.name||"Une ville").slice(0,24),kind:kind,ts:Date.now()});return true}
+  catch(e){return false}
+}
+function nbPending(){
+  var k=nbk(),me=k.uid||"",n=0;
+  if(!me||!k.pub)return 0;
+  LIVE.list.forEach(function(c){
+    if(c.deals.indexOf(me)>=0&&k.deals.indexOf(c.uid)<0&&k.ref.indexOf(c.uid+":deal")<0)n++;
+    if(c.road.indexOf(me)>=0&&k.road.indexOf(c.uid)<0&&k.ref.indexOf(c.uid+":road")<0)n++;
+  });
+  return n;
+}
+function nbBadge(){
+  var n=nbPending(),els=[$("menuBtn")];
+  [].slice.call(document.querySelectorAll(".mtile")).forEach(function(t){if(t.textContent.indexOf("Voisins")>=0)els.push(t)});
+  els.forEach(function(e){
+    var b=e.querySelector(".nbadge");
+    if(!n){if(b)b.remove();return}
+    if(!b){b=document.createElement("span");b.className="nbadge";e.classList.add("hasb");e.appendChild(b)}
+    b.textContent=String(n);
+  });
+}
+async function fbSendAid(toUid,toName,a){
+  var f=await fbInit();if(!f){toast("Serveur injoignable");return false}
+  var k=nbk();
+  try{
+    await f.F.addDoc(f.F.collection(f.fs,"aid",toUid,"gifts"),{from:f.uid,fromName:String(S.name||"Une ville").slice(0,24),amount:a,ts:Date.now()});
+    S.funds-=a;k.sent.n+=a;recompute();syncUI();scheduleSave(true);
+    toast("Aide envoyée à "+toName+" : "+eur(a));return true;
+  }catch(e){toast("Envoi refusé ou impossible");return false}
+}
+/* ---------- visite en lecture seule ---------- */
+async function fbVisit(id,name){
+  if(visiting)return;
+  var f=await fbInit();if(!f){toast("Serveur injoignable");return}
+  try{
+    var snap=await f.F.getDoc(f.F.doc(f.fs,"maps",id));
+    if(!snap.exists()){toast("Cette ville n'est plus en ligne");return}
+    var d=snap.data(),o=JSON.parse(d.json);
+    o.speed=0;o.tut=-1;delete o.nbk;delete o.chain;delete o.sf;
+    var st={S:S,cam:{x:cam.x,y:cam.y,s:cam.s},tool:tool};
+    loadState(o);
+    visStash=st;visiting=true;S.speed=0;
+    $("nbShade").hidden=true;
+    $("app").classList.add("visiting");
+    tool="pan";try{setTool("pan")}catch(e){}
+    pending=null;try{updateConfirm()}catch(e){}
+    var bar=$("visBar");
+    if(!bar){bar=document.createElement("div");bar.id="visBar";bar.className="visbar";bar.setAttribute("role","status");
+      var b=document.createElement("b");b.id="visTxt";var bt=document.createElement("button");bt.className="btn";bt.textContent="Retour à ma ville";bt.addEventListener("click",fbLeave);
+      bar.appendChild(b);bar.appendChild(bt);$("mapwrap").appendChild(bar)}
+    $("visTxt").textContent="Visite de "+String(name||d.name||"Ville").slice(0,24)+" en lecture seule";
+    bar.hidden=false;fitMap();syncUI();draw();
+  }catch(e){toast("Visite impossible")}
+}
+function fbLeave(){
+  if(!visiting||!visStash)return;
+  S=visStash.S;cam.x=visStash.cam.x;cam.y=visStash.cam.y;cam.s=visStash.cam.s;
+  visiting=false;visStash=null;fire.fill(0);
+  $("app").classList.remove("visiting");
+  var bar=$("visBar");if(bar)bar.hidden=true;
+  try{closeInfo()}catch(e){}
+  recompute();syncUI();draw();
+}
+/* ---------- panneau ---------- */
+function fbAgo(ts){
+  var m=Math.max(0,Math.round((Date.now()-ts)/60000));
+  if(m<5)return "en ligne";if(m<60)return "vue il y a "+m+" min";
+  var h=Math.round(m/60);if(h<48)return "vue il y a "+h+" h";return "vue il y a "+Math.round(h/24)+" j";
+}
+function fbRows(box){
+  var k=nbk(),me=k.uid||"";
+  if(!LIVE.list.length){var e=document.createElement("div");e.className="note";e.textContent="Aucune autre ville en ligne pour le moment. Dis à un ami d'activer le mode direct.";box.appendChild(e);return}
+  var linkN=cntB(T.LNK),SIDES=[["","Position ?"],["g","À gauche"],["d","À droite"],["h","En haut"],["b","En bas"]];
+  LIVE.list.forEach(function(v){
+    var id=v.uid,row=document.createElement("div"),txt=document.createElement("div"),nm=document.createElement("b"),sm=document.createElement("small"),s2=document.createElement("small"),bt=document.createElement("div");
+    row.className="ach";row.style.cssText="display:flex;gap:10px;align-items:flex-start;flex-wrap:wrap;margin-top:8px";
+    row.appendChild(nbThumb(v.th));txt.style.cssText="flex:1;min-width:140px";
+    nm.textContent=v.name;sm.style.display="block";sm.textContent=fmt(v.pop)+" habitants, "+v.tier+", "+fbAgo(v.ts);
+    var theirDeal=me&&v.deals.indexOf(me)>=0,mineDeal=k.deals.indexOf(id)>=0,theirRoad=me&&v.road.indexOf(me)>=0,mineRoad=k.road.indexOf(id)>=0;
+    var inDeal=theirDeal&&!mineDeal&&k.ref.indexOf(id+":deal")<0,inRoad=theirRoad&&!mineRoad&&k.ref.indexOf(id+":road")<0;
+    s2.style.display="block";s2.textContent="Commerce : "+(mineDeal&&theirDeal?"actif":mineDeal?"proposé":theirDeal?"demandé":"aucun")+". Liaison : "+(mineRoad&&theirRoad?"active":mineRoad?"proposée":theirRoad?"demandée":"aucune")+".";
+    txt.appendChild(nm);txt.appendChild(sm);txt.appendChild(s2);row.appendChild(txt);
+    var sel=document.createElement("select");sel.setAttribute("aria-label","Position de "+v.name);sel.style.cssText="min-height:40px;font:inherit;background:var(--bg);color:var(--ink);border:2px solid var(--edge);padding:4px";
+    SIDES.forEach(function(o){var op=document.createElement("option");op.value=o[0];op.textContent=o[1];if((k.side[id]||"")===o[0])op.selected=true;sel.appendChild(op)});
+    sel.addEventListener("change",function(){if(sel.value)k.side[id]=sel.value;else delete k.side[id];scheduleSave(true);draw()});
+    txt.appendChild(sel);
+    function pr(kind,label,fn){var d=document.createElement("div");d.style.cssText="width:100%;display:flex;gap:6px;flex-wrap:wrap;align-items:center;padding:6px;border:2px solid var(--edge);background:var(--chip)";var t=document.createElement("span");t.textContent=label;t.style.flex="1";d.appendChild(t);return d}
+    bt.style.cssText="display:flex;gap:6px;flex-wrap:wrap;width:100%";
+    if(inDeal){
+      var d1=pr("deal",v.name+" te propose un commerce");
+      d1.appendChild(nbBtn("Accepter",function(){
+        if(k.deals.length>=3){toast("Trois accords au plus");return}
+        k.deals.push(id);recompute();syncUI();scheduleSave(true);fbPublish(true);fbMsg(id,"accept");nbBadge();renderNb();toast("Commerce accepté")}));
+      d1.appendChild(nbBtn("Refuser",function(){k.ref.push(id+":deal");if(k.ref.length>30)k.ref.shift();scheduleSave(true);fbMsg(id,"refuse");nbBadge();renderNb()}));
+      bt.appendChild(d1);
+    }
+    if(inRoad){
+      var d2=pr("road",v.name+" te propose une liaison par route");
+      d2.appendChild(nbBtn("Accepter",function(){
+        if(k.road.length>=linkN){toast("Construis d'abord une route de liaison (Transports)");return}
+        k.road.push(id);recompute();syncUI();scheduleSave(true);fbPublish(true);fbMsg(id,"accept");nbBadge();renderNb();toast("Liaison acceptée")}));
+      d2.appendChild(nbBtn("Refuser",function(){k.ref.push(id+":road");if(k.ref.length>30)k.ref.shift();scheduleSave(true);fbMsg(id,"refuse");nbBadge();renderNb()}));
+      bt.appendChild(d2);
+    }
+    bt.appendChild(nbBtn("Visiter",function(){fbVisit(id,v.name)}));
+    [1000,5000,10000].forEach(function(a){
+      bt.appendChild(nbBtn("Aide "+fmt(a)+" €",async function(){
+        var m2=Math.floor(S.day/30);if(k.sent.m!==m2)k.sent={m:m2,n:0};
+        var c2=Math.max(0,Math.min(Math.floor(S.funds*.2),50000-k.sent.n));
+        if(a>c2){toast("Plafond atteint : "+eur(c2)+" possible ce mois-ci");return}
+        if(await fbSendAid(id,v.name,a))renderNb();
+      }));
+    });
+    if(!inDeal)bt.appendChild(nbBtn(mineDeal?"Rompre le commerce":"Proposer un commerce",async function(){
+      if(mineDeal)k.deals=k.deals.filter(function(x){return x!==id});else{if(k.deals.length>=3){toast("Trois accords au plus");return}k.deals.push(id);fbMsg(id,"deal");toast("Proposition envoyée à "+v.name)}
+      recompute();syncUI();scheduleSave(true);fbPublish(true);renderNb();
+    }));
+    if(!inRoad)bt.appendChild(nbBtn(mineRoad?"Rompre la liaison":"Relier par route",function(){
+      if(mineRoad)k.road=k.road.filter(function(x){return x!==id});else{if(k.road.length>=linkN){toast("Construis d'abord une route de liaison (Transports)");return}k.road.push(id);fbMsg(id,"road");toast("Proposition envoyée à "+v.name)}
+      recompute();syncUI();scheduleSave(true);fbPublish(true);renderNb();
+    }));
+    var mr=document.createElement("div");mr.style.cssText="width:100%;display:flex;gap:6px;flex-wrap:wrap;align-items:center";
+    var ml=document.createElement("small");ml.textContent="Message :";mr.appendChild(ml);
+    MSGB.forEach(function(m){mr.appendChild(nbBtn(m[1],async function(){
+      var key=id+m[0],now=Date.now();if(msgCool[key]&&now-msgCool[key]<20000){toast("Attends un peu avant de le renvoyer");return}
+      msgCool[key]=now;toast(await fbMsg(id,m[0])?"Message envoyé à "+v.name:"Envoi impossible")}))});
+    bt.appendChild(mr);
+    row.appendChild(bt);box.appendChild(row);
+  });
+}
+function fbRanking(sec){
+  var all=LIVE.list.map(function(c){return {n:c.name,p:c.pop,me:false}});
+  all.push({n:String(S.name||"Ma ville").slice(0,24),p:Math.round(ST.P),me:true});
+  all.sort(function(a,b){return b.p-a.p});
+  var h=document.createElement("div");h.className="title";h.textContent="Classement des villes en ligne";h.style.cssText="margin:10px 0 4px";sec.appendChild(h);
+  var ol=document.createElement("div");ol.style.cssText="display:grid;gap:2px";
+  all.slice(0,10).forEach(function(c,i){
+    var r=document.createElement("div");r.style.cssText="display:flex;gap:8px;padding:4px 6px;border:2px solid "+(c.me?"var(--accent)":"var(--chip)")+";font-size:13px";
+    var a=document.createElement("b");a.textContent=String(i+1);a.style.minWidth="22px";var b=document.createElement("span");b.textContent=c.n+(c.me?" (toi)":"");b.style.flex="1";var d=document.createElement("span");d.textContent=fmt(c.p)+" hab.";
+    r.appendChild(a);r.appendChild(b);r.appendChild(d);ol.appendChild(r)});
+  sec.appendChild(ol);
+  var mi=all.findIndex(function(c){return c.me});
+  if(mi>=10){var t=document.createElement("div");t.className="note";t.textContent="Ta position : "+(mi+1)+" sur "+all.length+".";sec.appendChild(t)}
+}
+function liveSection(){
+  var box=$("nbList"),k=nbk(),sec=document.createElement("div"),h=document.createElement("div"),n=document.createElement("div");
+  sec.style.cssText="border-bottom:2px solid #1b2236;padding-bottom:10px;margin-bottom:10px";
+  h.className="title";h.textContent="Villes en direct";h.style.marginBottom="4px";sec.appendChild(h);
+  n.className="note";sec.appendChild(n);
+  if(!k.pub){
+    n.textContent="Le mode direct publie le nom, la population et la carte de ta ville pour les autres joueurs (identifiant anonyme, aucun compte). Tu peux l'arrêter à tout moment, ce qui efface ta ville du serveur."+(LIVE.err?" Dernière erreur : "+LIVE.err+".":"");
+    sec.appendChild(nbBtn("Activer le mode direct",async function(){
+      var f=await fbInit();if(!f){toast("Serveur injoignable");renderNb();return}
+      k.pub=true;k.uid=f.uid;scheduleSave(true);await fbPublish(true);await fbRefresh();fbAidListen();renderNb();
+    }));
+  }else{
+    n.textContent="Mode direct actif. Ta ville est visible des autres joueurs et mise à jour chaque mois, à l'ouverture de ce panneau et quand tu changes un accord. Aide possible ce mois-ci : "+eur(Math.max(0,Math.min(Math.floor(S.funds*.2),50000-k.sent.n)))+"."+(LIVE.err?" Erreur : "+LIVE.err+".":"");
+    var r=document.createElement("div");r.style.cssText="display:flex;gap:6px;flex-wrap:wrap;margin:6px 0";
+    r.appendChild(nbBtn("Actualiser",async function(){await fbPublish(true);await fbRefresh();renderNb()}));
+    r.appendChild(nbBtn("Arrêter le mode direct",async function(){await fbUnpublish();LIVE.list=[];LIVE.cards={};recompute();syncUI();renderNb()}));
+    sec.appendChild(r);fbRows(sec);fbRanking(sec);nbBadge();
+  }
+  box.insertBefore(sec,box.firstChild);
+}
+var renderNbBase=renderNb;
+renderNb=function(){
+  if(nbk().pub){$("nbList").textContent="";$("nbInfo").textContent="Mode direct : liste, visite, aide, commerce et liaison se font directement, sans aucun code.";liveSection()}
+  else{renderNbBase();liveSection()}
+};
+(function(){
+  var open=null;
+  document.addEventListener("click",function(e){
+    var t=e.target;
+    if(t&&t.id==="nbOpen"&&S&&!visiting&&nbk().pub){fbPublish(false);fbRefresh().then(function(){if(!$("nbShade").hidden)renderNb()});fbAidListen()}
+  },true);
+})();
+
+/* ---------- compte e-mail et cloud sur demande ---------- */
+function accUser(){return fb&&fb.auth&&fb.auth.currentUser&&!fb.auth.currentUser.isAnonymous?fb.auth.currentUser:null}
+function accMsg(e){
+  var c=String((e&&e.code)||e||"");
+  if(c.indexOf("email-already-in-use")>=0||c.indexOf("credential-already-in-use")>=0)return "Cet e-mail a déjà un compte : utilise Me connecter.";
+  if(c.indexOf("weak-password")>=0)return "Mot de passe trop court (6 caractères au moins).";
+  if(c.indexOf("invalid-email")>=0)return "Adresse e-mail invalide.";
+  if(c.indexOf("invalid-credential")>=0||c.indexOf("wrong-password")>=0||c.indexOf("user-not-found")>=0)return "E-mail ou mot de passe incorrect.";
+  if(c.indexOf("operation-not-allowed")>=0)return "La connexion par e-mail n'est pas activée dans Firebase.";
+  if(c.indexOf("too-many-requests")>=0)return "Trop d'essais, réessaie dans quelques minutes.";
+  if(c.indexOf("network")>=0)return "Pas de réseau.";
+  return "Échec : "+c.slice(0,80);
+}
+function accRender(){
+  var u=accUser();
+  $("accSt").textContent=u?"Connecté : "+u.email+". Ta ville est enregistrée sur cet appareil ; utilise Sauvegarder dans le cloud pour la retrouver ailleurs.":"Non connecté. Ta ville reste sur cet appareil.";
+  $("accForm").hidden=!!u;$("accBox").hidden=!u;
+}
+async function accOpen(){var f=await fbInit();if(!f){$("accSt").textContent="Serveur injoignable ("+(LIVE.err||"réseau")+").";return}accRender()}
+async function accAuthDone(){
+  if(aidUnsub){try{aidUnsub()}catch(e){}aidUnsub=null}
+  fb.uid=fb.auth.currentUser.uid;LIVE.list=[];LIVE.cards={};
+  var k=nbk();k.uid=fb.uid;accRender();
+  if(k.pub){fbPublish(true);fbRefresh();fbAidListen()}
+}
+function accCreds(){
+  var m=$("accMail").value.trim(),p=$("accPw").value;
+  if(!m||!p){toast("Saisis ton e-mail et ton mot de passe");return null}
+  return {m:m,p:p};
+}
+function accWire(){
+  $("menuBtn").addEventListener("click",function(){accOpen()},true);
+  $("accNew").addEventListener("click",async function(){
+    var c=accCreds();if(!c)return;var f=await fbInit();if(!f){toast("Serveur injoignable");return}
+    try{
+      var cur=f.auth.currentUser;
+      if(cur&&cur.isAnonymous)await f.Au.linkWithCredential(cur,f.Au.EmailAuthProvider.credential(c.m,c.p));
+      else await f.Au.createUserWithEmailAndPassword(f.auth,c.m,c.p);
+      await accAuthDone();$("accPw").value="";toast("Compte créé. Pense à sauvegarder dans le cloud.",3500);
+    }catch(e){toast(accMsg(e),3500)}
+  });
+  $("accIn").addEventListener("click",async function(){
+    var c=accCreds();if(!c)return;var f=await fbInit();if(!f){toast("Serveur injoignable");return}
+    try{
+      await f.Au.signInWithEmailAndPassword(f.auth,c.m,c.p);
+      await accAuthDone();$("accPw").value="";toast("Connecté. Utilise Charger depuis le cloud pour récupérer ta ville.",4000);
+    }catch(e){toast(accMsg(e),3500)}
+  });
+  $("accForgot").addEventListener("click",async function(){
+    var m=$("accMail").value.trim();if(!m){toast("Saisis d'abord ton e-mail");return}
+    var f=await fbInit();if(!f){toast("Serveur injoignable");return}
+    try{await f.Au.sendPasswordResetEmail(f.auth,m);toast("E-mail de réinitialisation envoyé (vérifie les courriers indésirables)",4000)}catch(e){toast(accMsg(e),3500)}
+  });
+  $("accSave").addEventListener("click",async function(){
+    var f=await fbInit(),u=accUser();if(!f||!u){toast("Connecte-toi d'abord");return}
+    if(visiting){toast("Termine ta visite d'abord");return}
+    try{
+      var st=serialize();
+      await f.F.setDoc(f.F.doc(f.fs,"saves",u.uid),{save:JSON.stringify(st),ts:st.ts});
+      toast("Ville sauvegardée dans le cloud à "+hhmm(st.ts),3500);
+    }catch(e){toast("Sauvegarde refusée : "+String((e&&e.code)||"").slice(0,40),3500)}
+  });
+  armed($("accLoad"),"Confirmer : remplace la partie actuelle",async function(){
+    var f=await fbInit(),u=accUser();if(!f||!u){toast("Connecte-toi d'abord");return}
+    if(visiting){toast("Termine ta visite d'abord");return}
+    try{
+      var s=await f.F.getDoc(f.F.doc(f.fs,"saves",u.uid));
+      if(!s.exists()){toast("Aucune sauvegarde cloud pour ce compte");return}
+      var o=JSON.parse(s.data().save);loadState(o);S.ts=Date.now();touched=true;
+      var k=nbk();k.uid=f.uid;scheduleSave(true);closeMenu();toast("Ville chargée depuis le cloud",3500);
+      if(k.pub){fbPublish(true);fbRefresh();fbAidListen()}
+    }catch(e){toast("Chargement impossible")}
+  });
+  armed($("accOut"),"Confirmer la déconnexion",async function(){
+    var f=await fbInit();if(!f)return;
+    try{
+      if(nbk().pub)await fbUnpublish();
+      if(aidUnsub){try{aidUnsub()}catch(e){}aidUnsub=null}
+      await f.Au.signOut(f.auth);await f.Au.signInAnonymously(f.auth);
+      f.uid=f.auth.currentUser.uid;nbk().uid="";LIVE.list=[];LIVE.cards={};accRender();toast("Déconnecté. Le mode direct a été arrêté.",3500)
+    }catch(e){toast("Déconnexion impossible")}
+  });
+}
+accWire();
+
+/* ---------- menu en tuiles ---------- */
+function menuTiles(){
+  var sheet=document.querySelector("#shade .sheet");if(!sheet)return;
+  var row=sheet.querySelector(".row"),title=row.querySelector(".title"),secs=[].slice.call(sheet.children).filter(function(e){return e.classList.contains("sec")});
+  function names(a){return secs.filter(function(s){var h=s.querySelector("h2");return h&&a.indexOf(h.textContent.trim())>=0})}
+  var G=[
+   ["Voisins","V","#4aa8e0","Villes en direct, aide, visite",["VOISINS"],"nb"],
+   ["Compte et cloud","C","#7cc05a","Retrouver ta ville ailleurs",["COMPTE ET CLOUD"]],
+   ["Sauvegarde","S","#3f6fb5","Sauvegarder, nom, nouvelle partie",["SAUVEGARDE ET PARTIE"]],
+   ["Budget","B","#c99a12","Impôts, revenus, dépenses",["BUDGET"]],
+   ["Ville","H","#2f7d32","Réglages, mode, terrain",["VILLE","MODE ET SCÉNARIO","TERRAIN"]],
+   ["Conseil","L","#6f6f78","Voter des lois",["CONSEIL MUNICIPAL"]],
+   ["Quartiers","Q","#c0503c","Vue par secteur",["QUARTIERS"]],
+   ["Catastrophes","!","#8a3a0a","Réglage et tests",["CATASTROPHES"]],
+   ["Objectifs","O","#7a5ab5","Succès et suite",["OBJECTIFS","PROCHAINES ÉTAPES"]],
+   ["Aide","?","#1a8a8a","Guide et recherche",[],"help"]
+  ];
+  var grid=document.createElement("div");grid.className="mtiles";grid.id="mTiles";
+  var back=document.createElement("button");back.className="btn";back.textContent="Retour";back.hidden=true;back.id="mBack";
+  row.insertBefore(back,row.querySelector("#closeBtn"));
+  var used=[];
+  function show(g){
+    used.forEach(function(s){s.classList.add("tilehid")});
+    if(!g){grid.classList.remove("tilehid");title.textContent="Menu";back.hidden=true;sheet.scrollTop=0;return}
+    grid.classList.add("tilehid");title.textContent=g[0];back.hidden=false;
+    names(g[4]).forEach(function(s){s.classList.remove("tilehid")});sheet.scrollTop=0;
+  }
+  G.forEach(function(g){
+    names(g[4]).forEach(function(s){if(used.indexOf(s)<0)used.push(s)});
+    var b=document.createElement("button"),i=document.createElement("i"),n=document.createElement("span"),d=document.createElement("small");
+    b.className="mtile";i.textContent=g[1];i.style.background=g[2];n.textContent=g[0];d.textContent=g[3];
+    b.appendChild(i);b.appendChild(n);b.appendChild(d);
+    b.addEventListener("click",function(){
+      if(g[5]==="nb"){$("nbOpen").click();return}
+      if(g[5]==="help"){$("shade").hidden=true;$("helpShade").hidden=false;return}
+      show(g);
+    });
+    grid.appendChild(b);
+  });
+  secs.forEach(function(s){if(used.indexOf(s)<0)used.push(s)});
+  row.parentNode.insertBefore(grid,row.nextSibling);
+  back.addEventListener("click",function(){show(null)});
+  $("menuBtn").addEventListener("click",function(){show(null)},true);
+  menuGo=function(n){G.forEach(function(g){if(g[0]===n&&!g[5])show(g)})};
+  show(null);
+}
+menuTiles();
+/* ---------- recherche dans l'aide ---------- */
+(function(){
+  var sheet=document.querySelector("#helpShade .sheet");if(!sheet)return;
+  var row=sheet.querySelector(".row"),inp=document.createElement("input"),ds=[].slice.call(sheet.querySelectorAll("details"));
+  inp.type="text";inp.className="helpsearch";inp.placeholder="Rechercher dans l'aide (eau, police, voisins...)";inp.setAttribute("aria-label","Rechercher dans l'aide");
+  var tt=sheet.querySelector("#tutTop");(tt||row).parentNode.insertBefore(inp,(tt||row).nextSibling);
+  inp.addEventListener("input",function(){
+    var q=inp.value.trim().toLowerCase();
+    ds.forEach(function(d){
+      if(!q){d.style.display="";return}
+      var hit=d.textContent.toLowerCase().indexOf(q)>=0;d.style.display=hit?"":"none";if(hit)d.open=true;
+    });
+  });
+})();
+/* ---------- aide reçue : fenêtre au centre ---------- */
+var aidQ=[];
+function aidPopup(from,amount){nbPopup("Aide reçue",from+" t'envoie "+eur(amount)+".","La somme a été ajoutée à ta caisse.")}
+function nbPopup(title,msg,note,onClose){
+  if(typeof note==="function"){onClose=note;note=""}
+  aidQ.push([title,msg,note||"",onClose]);
+  var sh=$("aidShade");
+  if(!sh){
+    sh=document.createElement("div");sh.className="shade";sh.id="aidShade";sh.hidden=true;sh.style.cssText="align-items:center;justify-content:center;padding:16px;z-index:14";
+    sh.innerHTML='<div class="sheet" role="alertdialog" aria-labelledby="aidT" style="width:min(380px,100%);text-align:center"><div class="title" id="aidT">Aide reçue</div><div id="aidM" style="font-size:18px;line-height:1.4"></div><div id="aidN" class="note"></div><div class="btns" style="justify-content:center"><button class="btn primary" id="aidOk">OK</button></div></div>';
+    $("app").appendChild(sh);
+    $("aidOk").addEventListener("click",function(){var a=aidQ.shift();if(a&&a[3]){try{a[3]()}catch(e){}}aidShow()});
+  }
+  if(sh.hidden)aidShow();
+  else $("aidN").textContent="Encore "+(aidQ.length-1)+" message(s) en attente";
+}
+function aidShow(){
+  var sh=$("aidShade");
+  if(!aidQ.length){sh.hidden=true;return}
+  var a=aidQ[0];$("aidT").textContent=a[0];$("aidM").textContent=a[1];
+  $("aidN").textContent=aidQ.length>1?("Encore "+(aidQ.length-1)+" message(s) en attente"):a[2];
+  sh.hidden=false;$("aidOk").focus();
+}
+
+/* ---------- budget détaillé ---------- */
+var menuGo;
+function eurS(v){return (v<0?"-":"")+eur(Math.abs(v))}
+function budSync(){
+  if(!S||!$("taxC"))return;
+  budEnsure();
+  var q=[["svRd","rd"],["svSf","sf"],["svHl","hl"],["svUt","ut"]],gm=ST.gmm||1;
+  $("taxC").value=S.tx.c;$("taxCv").textContent=S.tx.c;$("taxI").value=S.tx.i;$("taxIv").textContent=S.tx.i;
+  var nt=[];
+  if(S.tx.c>=13)nt.push("Taxe des commerces élevée : peu de nouveaux commerces.");
+  if(S.tx.i>=13)nt.push("Taxe de l'industrie élevée : les usines hésitent à s'installer.");
+  if(S.tax>=12)nt.push("Taxe des habitants élevée : l'humeur baisse.");
+  $("taxN").textContent=nt.join(" ");
+  q.forEach(function(p){
+    var v=S.sv[p[1]],c=Math.round((ST.bc&&ST.bc[p[1]]||0)*v/100*gm);
+    $(p[0]).value=v;$(p[0]+"v").textContent=v;$(p[0]+"c").textContent="("+eur(c)+" par mois)";
+    var t="";
+    if(p[1]==="rd")t=v<100?"Routes dégradées : plus d'embouteillages, humeur en baisse.":v>100?"Routes mieux entretenues : moins de bouchons.":"";
+    if(p[1]==="sf")t=v<100?"Moins de patrouilles : criminalité en hausse, incendies plus longs à éteindre.":v>100?"Plus de policiers et de pompiers : moins de crimes, incendies éteints plus vite.":"";
+    if(p[1]==="hl")t=v<100?"Santé et éducation en baisse : l'humeur des habitants diminue.":v>100?"Meilleurs soins et écoles : l'humeur progresse.":"";
+    if(p[1]==="ut")t=v<100?"Sous-financés : capacité d'eau, de courant et de déchets réduite, risque de pannes.":v>100?"Petite marge de capacité et de loisirs en plus.":"";
+    $(p[0]+"n").textContent=t;
+  });
+}
+(function(){
+  function hook(id,fn){var e=$(id);e.addEventListener("input",function(){if(visiting)return;fn(+this.value);touched=true;recompute();syncUI()});e.addEventListener("change",function(){scheduleSave(false)})}
+  hook("taxC",function(v){budEnsure();S.tx.c=v});hook("taxI",function(v){budEnsure();S.tx.i=v});
+  hook("svRd",function(v){budEnsure();S.sv.rd=v});hook("svSf",function(v){budEnsure();S.sv.sf=v});
+  hook("svHl",function(v){budEnsure();S.sv.hl=v});hook("svUt",function(v){budEnsure();S.sv.ut=v});
+  var chip=$("funds").parentNode;
+  chip.classList.add("chipb");chip.setAttribute("role","button");chip.setAttribute("tabindex","0");chip.setAttribute("aria-label","Fonds : ouvrir le budget");chip.title="Ouvrir le budget";
+  function go(){if(visiting)return;openMenu();if(menuGo)menuGo("Budget")}
+  chip.addEventListener("click",go);
+  chip.addEventListener("keydown",function(e){if(e.key==="Enter"||e.key===" "){e.preventDefault();go()}});
+  var hadSave=false;try{hadSave=!!localStorage.getItem(KEY)}catch(e){}
+  try{if(!hadSave)localStorage.setItem("vp-bud-v1","1")}catch(e){}
+  setTimeout(function(){
+    try{
+      if(!hadSave||!S||visiting||!$("newShade").hidden)return;
+      if(localStorage.getItem("vp-bud-v1"))return;
+      var sh=document.createElement("div");sh.className="shade";sh.style.cssText="align-items:center;justify-content:center;padding:16px;z-index:15";
+      sh.innerHTML='<div class="sheet" role="alertdialog" aria-labelledby="bnT" style="width:min(400px,100%)"><div class="title" id="bnT">Nouveau : budget détaillé</div><div style="line-height:1.45">Tu peux maintenant régler trois taxes séparées (habitants, commerces, industrie) et quatre postes de dépenses : voirie, police et pompiers, santé et éducation, parcs, eau, énergie et déchets. Baisser un poste fait des économies mais dégrade le service. Ta ville garde exactement son économie actuelle tant que tu ne touches à rien. Tu y accèdes en touchant la case Fonds en haut.</div><div class="btns"><button class="btn primary" id="bnGo">Voir le budget</button><button class="btn" id="bnOk">Plus tard</button></div></div>';
+      $("app").appendChild(sh);
+      function done(){try{localStorage.setItem("vp-bud-v1","1")}catch(e){}sh.remove()}
+      $("bnOk").addEventListener("click",done);
+      $("bnGo").addEventListener("click",function(){done();openMenu();if(menuGo)menuGo("Budget")});
+    }catch(e){if(window.console)console.error("bn",e)}
+  },1500);
+})();
+
+/* ---------- conseils budget ---------- */
+(function(){
+  var sh=null;
+  function sec(h,items){return '<div><b>'+h+'</b><ul style="margin:4px 0 0;padding-left:18px;line-height:1.45">'+items.map(function(t){return '<li>'+t+'</li>'}).join('')+'</ul></div>'}
+  function open(){
+    if(!sh){
+      sh=document.createElement("div");sh.className="shade";sh.style.cssText="align-items:center;justify-content:center;padding:16px;z-index:15";
+      sh.innerHTML='<div class="sheet" role="dialog" aria-labelledby="bhT" style="width:min(460px,100%);max-height:88%"><div class="row" style="flex-wrap:nowrap"><div class="title" id="bhT">Régler son budget</div><button class="btn" id="bhX">Fermer</button></div>'+
+      sec("Comment ça marche",["Chaque mois, tes revenus (impôts, tourisme, casino, fermes, ports, parcs technologiques) moins tes dépenses (entretien des bâtiments et des routes, dépenses sociales) donnent ton solde.","Le point de départ conseillé : taxes autour de 9 % et dépenses à 100 %.","Chaque réglage agit tout de suite et se corrige à tout moment : remonter un curseur rétablit le service."])+
+      sec("Les trois taxes",["Habitants : plus elle monte, plus l'humeur baisse. Au dessus de 12 %, les habitants se plaignent.","Commerces et industrie : elles ne touchent pas l'humeur, mais plus elles sont hautes, moins de nouvelles zones C ou I apparaissent. Chaque point au dessus de 9 % retire de la demande.","Pour équilibrer les comptes, monte d'abord un peu les taxes des commerces et de l'industrie (2 à 3 points), puis celle des habitants en dernier."])+
+      sec("Les quatre postes de dépenses",["Voirie et transports : trop bas, plus d'embouteillages et un peu d'humeur en moins. C'est le poste le moins risqué à réduire un peu (80 à 90 %).","Police et pompiers : trop bas, la criminalité monte (jusqu'à 80 % de plus) et les incendies durent plus longtemps. À ne pas réduire dans les quartiers denses.","Santé et éducation : trop bas, la couverture baisse et l'humeur aussi, surtout dans une grande ville.","Parcs, eau, énergie, déchets : trop bas, les capacités baissent. Si le courant ou l'eau manquent, l'humeur chute fortement et les zones ne grandissent plus. Réduis-le avec prudence."])+
+      sec("Conseils",["Ville en déficit : monte les taxes commerces et industrie, puis réduis la voirie de 10 à 20 %.","Ville riche : monte santé et éducation vers 120 %, baisse la taxe des habitants pour attirer du monde.","Surveille le visage de l'humeur en haut de l'écran et les vues colorées (criminalité, pollution) après chaque changement.","Mettre un poste à 0 % économise tout, mais les effets sont forts et rapides."])+
+      '</div>';
+      $("app").appendChild(sh);
+      $("bhX").addEventListener("click",function(){sh.hidden=true});
+      sh.addEventListener("click",function(e){if(e.target===sh)sh.hidden=true});
+    }
+    sh.hidden=false;sh.querySelector(".sheet").scrollTop=0;
+  }
+  $("budHelp").addEventListener("click",open);
+})();
+
+/* ---------- étiquettes de voisins sur les bords de la carte ---------- */
+function nbTags(w,h){
+  if(visiting||!S||!S.nbk)return;
+  var k=S.nbk,ids=Object.keys(k.side||{}),by={g:[],d:[],h:[],b:[]},i,j,c,nm;
+  if(!ids.length)return;
+  for(i=0;i<ids.length;i++){c=LIVE.cards[ids[i]]||k.cards[ids[i]];if(c&&by[k.side[ids[i]]])by[k.side[ids[i]]].push(String(c.name).slice(0,14))}
+  ctx.save();ctx.font='700 12px "Space Mono",monospace';ctx.textBaseline="middle";
+  ["g","d","h","b"].forEach(function(s){
+    by[s].forEach(function(n,j){
+      var tw=Math.ceil(ctx.measureText(n).width)+26,bw=tw,bh=22,x,y,ax,ay;
+      if(s==="g"){x=4;y=h/2-by[s].length*13+j*26}
+      else if(s==="d"){x=w-bw-54;y=h/2-by[s].length*13+j*26}
+      else if(s==="h"){x=w/2-bw/2;y=62+j*26}
+      else{x=w/2-bw/2;y=h-60-j*26}
+      ctx.fillStyle="#164a7a";ctx.fillRect(x,y,bw,bh);ctx.strokeStyle="#9fd0ff";ctx.lineWidth=2;ctx.strokeRect(x+1,y+1,bw-2,bh-2);
+      ctx.fillStyle="#ffffff";ctx.beginPath();
+      if(s==="g"){ctx.moveTo(x+14,y+5);ctx.lineTo(x+14,y+17);ctx.lineTo(x+6,y+11)}
+      else if(s==="d"){ctx.moveTo(x+6,y+5);ctx.lineTo(x+6,y+17);ctx.lineTo(x+14,y+11)}
+      else if(s==="h"){ctx.moveTo(x+6,y+16);ctx.lineTo(x+14,y+16);ctx.lineTo(x+10,y+6)}
+      else{ctx.moveTo(x+6,y+6);ctx.lineTo(x+14,y+6);ctx.lineTo(x+10,y+16)}
+      ctx.fill();ctx.fillText(n,x+20,y+11.5);
+    });
+  });
+  ctx.restore();
+}
+setTimeout(function(){try{nbBadge()}catch(e){}},2500);
+
+/* ---------- mode daltonien ---------- */
+var CBV={3:{c:"rgba(230,159,0,.85)",d:"Orange : danger. Bleu : couvert par la police"},6:{c:"linear-gradient(90deg,#56B4E9,#D55E00)",d:"Routes : bleu fluide, orange vif saturé"},7:{c:"linear-gradient(90deg,#440154,#21918c,#fde725)",d:"Jaune : quartier recherché. Violet : délaissé"},8:{c:"linear-gradient(90deg,#E69F00,#0072B2)",d:"Orange : hôpital. Bleu : école. Jaune pâle : les deux"},12:{c:"linear-gradient(90deg,#440154,#21918c,#fde725)",d:"Jaune : habitants contents. Violet : mécontents"}};
+function vir(q,a){
+  q=Math.max(0,Math.min(1,q));var P=[[68,1,84],[59,82,139],[33,145,140],[94,201,98],[253,231,37]],p=q*4,j=Math.min(3,Math.floor(p)),f=p-j,c=P[j],d=P[j+1];
+  return "rgba("+Math.round(c[0]+(d[0]-c[0])*f)+","+Math.round(c[1]+(d[1]-c[1])*f)+","+Math.round(c[2]+(d[2]-c[2])*f)+","+a+")";
+}
+function cbOverlay(i,t){
+  switch(ovMode){
+    case 3:return crime[i]>0?"rgba(230,159,0,"+Math.min(.75,crime[i]/60)+")":(pcover[i]?"rgba(0,114,178,.28)":null);
+    case 6:if(t!==T.RD)return null;var v=Math.min(1,traffic[i]/12);return "rgba("+Math.round(86+127*v)+","+Math.round(180-86*v)+","+Math.round(233-233*v)+",.75)";
+    case 7:if(t===T.W)return null;return vir(lv[i]/100,.5);
+    case 8:if(hcover[i]&&ecover[i])return "rgba(240,228,66,.45)";if(hcover[i])return "rgba(230,159,0,.4)";if(ecover[i])return "rgba(0,114,178,.4)";return null;
+    case 12:if(t<T.ZR||t>T.ZI||S.lvl[i]===0)return null;return vir(Math.max(0,Math.min(100,100-crime[i]*.8-poll[i]/2.55*.6-noiseA[i]*.4+amen[i]*.6+(hcover[i]?8:0)+(ecover[i]?6:0)-20))/100,.55);
+  }
+  return undefined;
+}
+function zoneLetter(dx,dy,dw,dh,t){
+  var s=Math.max(9,Math.round(dh*.42)),ch=t===T.ZR?"R":t===T.ZC?"C":"I";
+  ctx.font='700 '+s+'px "Space Mono",monospace';ctx.textBaseline="alphabetic";ctx.lineWidth=3;ctx.strokeStyle="#1a2233";ctx.strokeText(ch,dx+2,dy+dh-2);ctx.fillStyle="#ffffff";ctx.fillText(ch,dx+2,dy+dh-2);
+}
+function cbApply(on,quiet){
+  CB=!!on;document.documentElement.setAttribute("data-cb",on?"1":"0");
+  try{localStorage.setItem("vp-cb",on?"1":"0")}catch(e){}
+  var k;for(k in CBV){var v=VIEWS[+k];if(!v)continue;if(!v.o)v.o={c:v.c,d:v.d};v.c=on?CBV[k].c:v.o.c;v.d=on?CBV[k].d:v.o.d}
+  if(!quiet){var m=$("vmenu");m.textContent="";buildViews();var it=m.querySelectorAll(".vitem");if(it[ovMode])it[ovMode].setAttribute("aria-checked","true");draw()}
+}
+(function(){
+  var on=false;try{on=localStorage.getItem("vp-cb")==="1"}catch(e){}
+  if(on)cbApply(true,true);
+  var cb=$("cbOn");cb.checked=on;cb.addEventListener("change",function(){cbApply(this.checked)});
+  var asked=false;try{asked=!!localStorage.getItem("vp-cb-asked")}catch(e){}
+  if(asked)return;
+  function ask(){
+    if($("bnGo")||!document.getElementById("app")){setTimeout(ask,1500);return}
+    var sh=document.createElement("div");sh.className="shade";sh.style.cssText="align-items:center;justify-content:center;padding:16px;z-index:16";
+    sh.innerHTML='<div class="sheet" role="alertdialog" aria-labelledby="cbT" style="width:min(400px,100%)"><div class="title" id="cbT">Mode daltonien</div><div style="line-height:1.45">Veux-tu activer le mode daltonien ? Les couleurs sont remplacées par une palette lisible par tous, et les zones R, C et I portent une lettre. Tu pourras le changer dans Menu, Ville.</div><div class="btns"><button class="btn primary" id="cbYes">Activer</button><button class="btn" id="cbNo">Non merci</button></div></div>';
+    $("app").appendChild(sh);
+    function done(){try{localStorage.setItem("vp-cb-asked","1")}catch(e){}sh.remove()}
+    $("cbYes").addEventListener("click",function(){cbApply(true);$("cbOn").checked=true;done()});
+    $("cbNo").addEventListener("click",done);
+  }
+  setTimeout(ask,2200);
+})();
 /* ---------- sauvegarde ---------- */
 var KEY2=KEY;
 var db=null,docRef=null,uid=null,saving=false,savePend=false,saveT=0,lastLocal=0,lastCloud=0,cloudState="off",cloudSave=null;
 function scheduleSave(now){clearTimeout(saveT);saveT=setTimeout(doSave,now?50:4000)}
 async function doSave(){
-  if(!S)return;var st=serialize();S.ts=st.ts;
+  if(!S||visiting)return;var st=serialize();S.ts=st.ts;
   try{localStorage.setItem(KEY2,JSON.stringify(st));lastLocal=st.ts}catch(e){}
   if(docRef){
     if(saving){savePend=true;return}
@@ -3006,7 +3770,7 @@ function renderStatus(){
   if(cloudState==="ok")a.push("Dans le cloud à "+hhmm(lastCloud)+".");
   else if(cloudState==="err")a.push("Le cloud n'a pas répondu, réessaie plus tard. Le code de secours reste disponible.");
   else if(cloudState==="ro")a.push("Ton niveau d'accès ne permet pas d'écrire dans le cloud. Utilise le code de secours.");
-  else a.push("Cloud indisponible pour ce lien, sauvegarde locale seulement.");
+  else a.push("Sauvegarde locale. Pour retrouver ta ville ailleurs, utilise Compte et cloud.");
   $("st").textContent=a.join(" ");
 }
 function toCode(){return "VILLE1:"+btoa(unescape(encodeURIComponent(JSON.stringify(serialize()))))}
@@ -3014,24 +3778,29 @@ function fromCode(c){
   c=c.trim();if(c.indexOf("VILLE1:")!==0)throw new Error("préfixe");
   return JSON.parse(decodeURIComponent(escape(atob(c.slice(7)))));
 }
+async function cloudSync(){
+  var snap=await docRef.get();cloudState="ok";
+  if(snap.exists){
+    var data=snap.data();
+    if(data&&typeof data.save==="string"){
+      cloudSave=JSON.parse(data.save);lastCloud=cloudSave.ts||0;
+      if((cloudSave.ts||0)>(S.ts||0)+1000){
+        if(!touched&&S.day<1){loadState(cloudSave);S.ts=cloudSave.ts;$("newShade").hidden=true;toast("Partie chargée depuis le cloud")}
+        else $("banner").hidden=false;
+      }
+    }
+  }else{scheduleSave(false)}
+  renderStatus();
+}
 async function initCloud(){
   try{
-    if(!window.claude||!window.claude.use)return;
-    var d=await window.claude.use("db"),u=await window.claude.use("user");
-    if(!d||!u)return;uid=await u.id();if(!uid)return;
-    db=d;docRef=db.collection("data/users/"+uid).doc("save");
-    var snap=await docRef.get();cloudState="ok";
-    if(snap.exists){
-      var data=snap.data();
-      if(data&&typeof data.save==="string"){
-        cloudSave=JSON.parse(data.save);lastCloud=cloudSave.ts||0;
-        if((cloudSave.ts||0)>(S.ts||0)+1000){
-          if(!touched&&S.day<1){loadState(cloudSave);S.ts=cloudSave.ts;$("newShade").hidden=true;toast("Partie chargée depuis le cloud")}
-          else $("banner").hidden=false;
-        }
-      }
-    }else{scheduleSave(false)}
-    renderStatus();
+    var d=null,u=null;
+    if(window.claude&&window.claude.use){d=await window.claude.use("db");u=await window.claude.use("user")}
+    if(d&&u){
+      uid=await u.id();
+      if(uid){db=d;docRef=db.collection("data/users/"+uid).doc("save");await cloudSync();fbLiveStart();return}
+    }
+    renderStatus();fbLiveStart();
   }catch(e){cloudState=(e&&e.code==="invalid_argument")?"ro":"off";renderStatus()}
 }
 
@@ -3232,6 +4001,16 @@ function start(){
   buildSetup();buildSetup2();
   syncUI();resize();refreshToolLabels();
   $("nbOpen").addEventListener("click",function(){$("shade").hidden=true;$("nbShade").hidden=false;renderNb()});$("nbClose").addEventListener("click",function(){$("nbShade").hidden=true});
+  document.addEventListener("keydown",function(e){
+    var tg=e.target&&e.target.tagName;if(tg==="INPUT"||tg==="TEXTAREA"||e.ctrlKey||e.metaKey||e.altKey)return;
+    var open=document.querySelector(".shade:not([hidden])");if(open||evOpen)return;
+    var st=Math.max(2,60/(16*cam.s)),k=e.key,ok=true;
+    if(k==="ArrowLeft")cam.x-=st;else if(k==="ArrowRight")cam.x+=st;else if(k==="ArrowUp")cam.y-=st;else if(k==="ArrowDown")cam.y+=st;
+    else if(k==="+"||k==="=")zoomAt(cv.clientWidth/2,cv.clientHeight/2,cam.s*1.25);
+    else if(k==="-"||k==="_")zoomAt(cv.clientWidth/2,cv.clientHeight/2,cam.s/1.25);
+    else ok=false;
+    if(ok){e.preventDefault();clampCam();draw()}
+  });
   $("menuBtn").addEventListener("click",openMenu);$("closeBtn").addEventListener("click",closeMenu);
   $("shade").addEventListener("click",function(e){if(e.target===$("shade"))closeMenu()});
   $("zin").addEventListener("click",function(){zoomAt(cv.clientWidth/2,cv.clientHeight/2,cam.s*1.4)});
@@ -3296,7 +4075,7 @@ function start(){
   document.addEventListener("visibilitychange",function(){if(document.hidden)doSave()});
   window.addEventListener("pagehide",function(){doSave()});
   (function loop(){
-    if(S.speed>0&&!document.hidden&&!evOpen)tick();
+    if(S.speed>0&&!document.hidden&&!evOpen&&!visiting)tick();
     setTimeout(loop,S.speed?[0,1000,500,200][S.speed]:500);
   })();
   if(!loaded)openSetup(false);
@@ -3306,4 +4085,3 @@ start();
 })();
 
 </script>
-</body></html>
