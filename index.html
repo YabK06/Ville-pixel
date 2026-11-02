@@ -110,6 +110,7 @@ canvas#map{position:absolute;inset:0;width:100%;height:100%;touch-action:none;di
 .tool[aria-pressed="true"] em{color:var(--accent-ink)}
 .shade{position:absolute;inset:0;z-index:10;background:rgba(5,8,14,.55);display:flex;align-items:flex-end}
 .sheet{width:100%;max-height:86%;overflow:auto;background:var(--panel);border:3px solid var(--edge);padding:14px 14px calc(14px + env(safe-area-inset-bottom,0px));display:grid;gap:14px;-webkit-user-select:text;user-select:text}
+.wel{margin:0;padding-left:18px;display:grid;gap:4px;font-size:14px}
 .sheet h2{font-family:var(--font-px);font-size:13px;margin:0;font-weight:700;letter-spacing:.04em}
 .sec{display:grid;gap:8px}
 .kv{display:grid;grid-template-columns:1fr auto;gap:4px 12px;font-variant-numeric:tabular-nums}
@@ -285,6 +286,39 @@ button.chip{font:inherit;color:inherit;cursor:pointer;box-shadow:0 3px 0 var(--e
       <table class="tbl" id="infoTbl"></table>
       <div class="note" id="infoTip"></div>
       <div class="btns"><button class="btn primary" id="buyBtn" hidden>Acheter</button></div>
+    </div>
+  </div>
+
+  <div class="shade" id="welShade" hidden style="align-items:center;justify-content:center;padding:16px;z-index:20">
+    <div class="sheet" style="width:min(380px,100%);max-height:94%" role="dialog" aria-label="Bienvenue">
+      <div class="title" style="font-family:var(--font-px);font-size:24px">Ville Pixel</div>
+      <div class="note">Construis ta ville en pixel art, directement sur ton téléphone.</div>
+      <div class="sec">
+        <h2>AVEC UN COMPTE</h2>
+        <ul class="wel">
+          <li>Retrouve ta ville sur tous tes appareils</li>
+          <li>Ta partie survit si tu effaces ton navigateur</li>
+          <li>Visite les villes des autres joueurs et envoie-leur de l'aide</li>
+          <li>Participe au classement des villes en ligne</li>
+        </ul>
+      </div>
+      <div class="note" id="welLocal" hidden></div>
+      <div class="sec">
+        <label for="welMail" class="note">E-mail</label>
+        <input type="email" id="welMail" autocomplete="email" maxlength="80">
+        <label for="welPw" class="note">Mot de passe (6 caractères au moins)</label>
+        <input type="password" id="welPw" autocomplete="current-password" maxlength="80">
+        <div class="btns"><button class="btn primary" id="welNew">Créer mon compte</button><button class="btn" id="welIn">Me connecter</button><button class="btn" id="welForgot">Mot de passe oublié</button></div>
+        <div class="st" id="welSt"></div>
+        <div id="welChoice" hidden class="sec">
+          <div class="note" id="welChoiceTxt"></div>
+          <div class="btns"><button class="btn primary" id="welCloud">Charger la ville du compte</button><button class="btn" id="welKeep">Garder celle de cet appareil</button></div>
+        </div>
+      </div>
+      <div class="sec">
+        <div class="btns"><button class="btn" id="welSkip">Continuer sans compte</button></div>
+        <div class="note">Sans compte, ta ville n'est enregistrée que sur cet appareil. Elle sera perdue si tu effaces les données du navigateur.</div>
+      </div>
     </div>
   </div>
 
@@ -3467,6 +3501,7 @@ function accMsg(e){
 }
 function accRender(){
   var u=accUser();
+  try{if(u)localStorage.setItem("vp-acc","1")}catch(e){}
   $("accSt").textContent=u?"Connecté : "+u.email+". Ta ville est enregistrée sur cet appareil ; utilise Sauvegarder dans le cloud pour la retrouver ailleurs.":"Non connecté. Ta ville reste sur cet appareil.";
   $("accForm").hidden=!!u;$("accBox").hidden=!u;
 }
@@ -3474,6 +3509,7 @@ async function accOpen(){var f=await fbInit();if(!f){$("accSt").textContent="Ser
 async function accAuthDone(){
   if(aidUnsub){try{aidUnsub()}catch(e){}aidUnsub=null}
   fb.uid=fb.auth.currentUser.uid;LIVE.list=[];LIVE.cards={};
+  try{localStorage.setItem("vp-acc","1")}catch(e){}
   var k=nbk();k.uid=fb.uid;accRender();
   if(k.pub){fbPublish(true);fbRefresh();fbAidListen()}
 }
@@ -3530,12 +3566,75 @@ function accWire(){
     try{
       if(nbk().pub)await fbUnpublish();
       if(aidUnsub){try{aidUnsub()}catch(e){}aidUnsub=null}
+      try{localStorage.removeItem("vp-acc")}catch(e){}
       await f.Au.signOut(f.auth);await f.Au.signInAnonymously(f.auth);
       f.uid=f.auth.currentUser.uid;nbk().uid="";LIVE.list=[];LIVE.cards={};accRender();toast("Déconnecté. Le mode direct a été arrêté.",3500)
     }catch(e){toast("Déconnexion impossible")}
   });
 }
 accWire();
+
+
+/* ---------- page d'accueil (si pas connecté) ---------- */
+(function(){
+  var hasLocal=false;
+  function connected(){try{return localStorage.getItem("vp-acc")==="1"}catch(e){return false}}
+  function skipped(){try{return sessionStorage.getItem("vp-wel")==="1"}catch(e){return false}}
+  function close(){$("welShade").hidden=true}
+  function st(t){$("welSt").textContent=t}
+  function creds(){var m=$("welMail").value.trim(),p=$("welPw").value;if(!m||!p){st("Saisis ton e-mail et ton mot de passe.");return null}return {m:m,p:p}}
+  async function cloudGet(f,u){var s=await f.F.getDoc(f.F.doc(f.fs,"saves",u.uid));return s.exists()?s.data():null}
+  async function cloudPut(f,u){var o=serialize();await f.F.setDoc(f.F.doc(f.fs,"saves",u.uid),{save:JSON.stringify(o),ts:o.ts})}
+  function useCloud(f,d){var o=JSON.parse(d.save);loadState(o);S.ts=Date.now();touched=true;nbk().uid=f.uid;$("newShade").hidden=true;scheduleSave(true);close()}
+  function wire(){
+    $("welSkip").addEventListener("click",function(){try{sessionStorage.setItem("vp-wel","1")}catch(e){}close()});
+    $("welForgot").addEventListener("click",async function(){
+      var m=$("welMail").value.trim();if(!m){st("Saisis d'abord ton e-mail.");return}
+      var f=await fbInit();if(!f){st("Serveur injoignable.");return}
+      try{await f.Au.sendPasswordResetEmail(f.auth,m);st("E-mail de réinitialisation envoyé (vérifie les courriers indésirables).")}catch(e){st(accMsg(e))}
+    });
+    $("welNew").addEventListener("click",async function(){
+      var c=creds();if(!c)return;st("Création du compte...");
+      var f=await fbInit();if(!f){st("Serveur injoignable.");return}
+      try{
+        var cur=f.auth.currentUser;
+        if(cur&&cur.isAnonymous)await f.Au.linkWithCredential(cur,f.Au.EmailAuthProvider.credential(c.m,c.p));
+        else await f.Au.createUserWithEmailAndPassword(f.auth,c.m,c.p);
+        await accAuthDone();$("welPw").value="";
+        if(hasLocal){await cloudPut(f,accUser());toast("Compte créé. Ta ville est enregistrée dessus.",3500)}
+        else toast("Compte créé. Pense à sauvegarder dans le cloud.",3500);
+        close();
+      }catch(e){st(accMsg(e))}
+    });
+    $("welIn").addEventListener("click",async function(){
+      var c=creds();if(!c)return;st("Connexion...");
+      var f=await fbInit();if(!f){st("Serveur injoignable.");return}
+      try{
+        await f.Au.signInWithEmailAndPassword(f.auth,c.m,c.p);await accAuthDone();$("welPw").value="";
+        var u=accUser(),d=await cloudGet(f,u);
+        if(d&&!hasLocal){useCloud(f,d);toast("Ville chargée depuis ton compte",3500);return}
+        if(d&&hasLocal){
+          $("welChoiceTxt").textContent="Une ville est enregistrée sur ton compte (sauvegarde du "+new Date(d.ts||Date.now()).toLocaleDateString("fr-FR")+") et une autre sur cet appareil. Laquelle veux-tu jouer ? Celle du compte reste intacte tant que tu ne sauvegardes pas dans le cloud.";
+          $("welChoice").hidden=false;st("Connecté : "+c.m+".");
+          $("welCloud").onclick=function(){useCloud(f,d);toast("Ville chargée depuis ton compte",3500)};
+          $("welKeep").onclick=function(){close();toast("Partie de cet appareil conservée",3000)};
+          return;
+        }
+        if(hasLocal){await cloudPut(f,u);toast("Connecté. Ta ville est enregistrée sur ton compte.",3500);close();return}
+        close();toast("Connecté. Crée ta première ville.",3500);
+      }catch(e){st(accMsg(e))}
+    });
+  }
+  function show(){
+    try{hasLocal=!!localStorage.getItem(KEY)}catch(e){hasLocal=false}
+    var l=$("welLocal");
+    if(hasLocal&&S){l.hidden=false;l.textContent="Une ville est déjà enregistrée sur cet appareil : "+String(S.name||"Ville Pixel")+", "+fmt(Math.round(ST.P))+" habitants. Crée un compte pour l'y associer et la mettre à l'abri."}
+    $("welSkip").textContent=hasLocal?"Continuer ma partie sans compte":"Continuer sans compte";
+    $("welShade").hidden=false;
+  }
+  wire();
+  setTimeout(function(){try{if(connected()||skipped())return;show()}catch(e){}},350);
+})();
 
 /* ---------- menu en tuiles ---------- */
 function menuTiles(){
