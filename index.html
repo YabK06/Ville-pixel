@@ -3118,12 +3118,18 @@ function renderNb(){
   nbCodeBox("Ma carte de visite à envoyer à tes amis",myCard(),box);
   var imp=document.createElement("textarea");imp.rows=3;imp.placeholder="Colle ici une carte (VOISIN1:...) ou un chèque d'aide (AIDE1:...)";imp.style.cssText="width:100%;font-size:11px;margin-top:8px";
   box.appendChild(imp);box.appendChild(nbBtn("Importer le code",function(){nbImport(imp.value);renderNb()}));
-  if(!ids.length){var e=document.createElement("div");e.className="note";e.style.marginTop="8px";e.textContent="Aucun voisin pour le moment.";box.appendChild(e);return}
+  nbCodeRows(box,false);
+}
+function nbCodeRows(box,tag){
+  var k=nbk(),linkN=cntB(T.LNK),ids=Object.keys(k.cards),mo0=Math.floor(S.day/30);
+  if(k.sent.m!==mo0)k.sent={m:mo0,n:0};
+  var cap=Math.max(0,Math.min(Math.floor(S.funds*.2),50000-k.sent.n));
+  if(!ids.length){if(!tag){var e=document.createElement("div");e.className="note";e.style.marginTop="8px";e.textContent="Aucun voisin pour le moment.";box.appendChild(e)}return}
   ids.forEach(function(id){
     var v=k.cards[id],row=document.createElement("div"),txt=document.createElement("div"),nm=document.createElement("b"),sm=document.createElement("small"),s2=document.createElement("small"),bt=document.createElement("div"),out=document.createElement("div");
     row.className="ach";row.style.cssText="display:flex;gap:10px;align-items:flex-start;flex-wrap:wrap;margin-top:8px";
     row.appendChild(nbThumb(v.th));txt.style.cssText="flex:1;min-width:140px";
-    nm.textContent=v.name;sm.style.display="block";sm.textContent=fmt(v.pop)+" habitants, "+v.tier;
+    nm.textContent=v.name;sm.style.display="block";sm.textContent=fmt(v.pop)+" habitants, "+v.tier+(tag?", ajoutée par code":"");
     var theirDeal=v.deals.indexOf(k.cid)>=0,mineDeal=k.deals.indexOf(id)>=0,theirRoad=v.road.indexOf(k.cid)>=0,mineRoad=k.road.indexOf(id)>=0;
     s2.style.display="block";s2.textContent="Commerce : "+(mineDeal&&theirDeal?"actif":mineDeal?"proposé":theirDeal?"demandé":"aucun")+". Liaison : "+(mineRoad&&theirRoad?"active":mineRoad?"proposée":theirRoad?"demandée":"aucune")+".";
     txt.appendChild(nm);txt.appendChild(sm);txt.appendChild(s2);row.appendChild(txt);
@@ -3388,6 +3394,17 @@ function fbRows(box){
     row.appendChild(bt);box.appendChild(row);
   });
 }
+function fbCodeAdd(sec){
+  var k=nbk(),d=document.createElement("details"),sm=document.createElement("summary"),inner=document.createElement("div");
+  d.style.cssText="margin-top:10px;border:2px solid var(--chip);padding:6px";sm.textContent="Ajouter un voisin par code";sm.style.cssText="cursor:pointer;min-height:40px;display:flex;align-items:center";
+  d.appendChild(sm);d.appendChild(inner);
+  var n=document.createElement("div");n.className="note";n.textContent="Pour un ami qui n'est pas en mode direct : échange de cartes et de chèques par code, comme avant. Ses villes apparaissent dans la liste ci-dessus, marquées ajoutée par code.";inner.appendChild(n);
+  nbCodeBox("Ma carte de visite à envoyer à tes amis",myCard(),inner);
+  var imp=document.createElement("textarea");imp.rows=3;imp.placeholder="Colle ici une carte (VOISIN1:...) ou un chèque d'aide (AIDE1:...)";imp.style.cssText="width:100%;font-size:11px;margin-top:8px";
+  inner.appendChild(imp);inner.appendChild(nbBtn("Importer le code",function(){nbImport(imp.value);renderNb()}));
+  nbCodeRows(sec,true);
+  sec.appendChild(d);
+}
 function fbRanking(sec){
   var all=LIVE.list.map(function(c){return {n:c.name,p:c.pop,me:false}});
   all.push({n:String(S.name||"Ma ville").slice(0,24),p:Math.round(ST.P),me:true});
@@ -3418,13 +3435,13 @@ function liveSection(){
     var r=document.createElement("div");r.style.cssText="display:flex;gap:6px;flex-wrap:wrap;margin:6px 0";
     r.appendChild(nbBtn("Actualiser",async function(){await fbPublish(true);await fbRefresh();renderNb()}));
     r.appendChild(nbBtn("Arrêter le mode direct",async function(){await fbUnpublish();LIVE.list=[];LIVE.cards={};recompute();syncUI();renderNb()}));
-    sec.appendChild(r);fbRows(sec);fbRanking(sec);nbBadge();
+    sec.appendChild(r);fbRows(sec);fbCodeAdd(sec);fbRanking(sec);nbBadge();
   }
   box.insertBefore(sec,box.firstChild);
 }
 var renderNbBase=renderNb;
 renderNb=function(){
-  if(nbk().pub){$("nbList").textContent="";$("nbInfo").textContent="Mode direct : liste, visite, aide, commerce et liaison se font directement, sans aucun code.";liveSection()}
+  if(nbk().pub){$("nbList").textContent="";$("nbInfo").textContent="Mode direct : les villes en ligne se gèrent directement. Tu peux aussi ajouter un ami par code, il rejoint la même liste.";liveSection()}
   else{renderNbBase();liveSection()}
 };
 (function(){
